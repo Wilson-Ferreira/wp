@@ -1,0 +1,300 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/templates/Layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:sec="http://www.springframework.org/security/tags">
+
+    <ui:define name="content">
+
+        <f:view>
+            <f:metadata>
+                <f:viewAction action="#{configuracaoBean.buscarConfiguracoes()}"/>
+                <f:viewAction action="#{configuracaoBean.buscarUfs()}"/>
+            </f:metadata>
+
+            <p:outputPanel id="panelConteudo">
+
+                <div class="aw-page-title">             
+                    <p:outputPanel>
+                        <p:outputLabel value="Configurações da empresa"
+                                       rendered="#{jsfUtil.pageTitle}"/>
+                    </p:outputPanel>
+                </div>
+
+
+                <h:form id="toolbar" styleClass="ui-toolbar" prependId="false" rendered="#{jsfUtil.toolbar}"> 
+                    <p:toolbar>
+                        <p:toolbarGroup align="left">
+
+                            <p:commandButton value="Adicionar" icon="ui-icon-disk" process="@this" immediate="true" 
+                                             update=":panelConteudo" rendered="#{configuracaoBean.configuracao == null}"
+                                             resetValues="true" disabled="#{configuracaoBean.configuracao.id == null}"
+                                             action="#{configuracaoBean.preparaSalvarConfiguracoes}"/>
+                           
+                            <p:commandButton value="Alterar" icon="ui-icon-pencil" process="@this" immediate="true"
+                                             resetValues="true" 
+                                             action="#{configuracaoBean.preparaEditarConfiguracoes}"
+                                             update=":panelConteudo"/>
+                          
+                            <p:commandButton value="Excluir" icon="ui-icon-trash" process="@this" immediate="true"
+                                             update=":panelConteudo" resetValues="true"
+                                             action="#{configuracaoBean.preparaExcluirConfiguracoes}"/> 
+
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                </h:form>
+
+                <h:form prependId="false" rendered="#{jsfUtil.toolbar and configuracaoBean.configuracao != null}">
+
+                    <h:panelGrid columns="1" style="width: 100%; text-align: center">
+
+                        <h3>#{configuracaoBean.configuracao.empresa}</h3>
+
+                        <p:graphicImage value="#{configuracaoBean.configuracao.url_foto_empresa}"
+                                        style="width: 40%; height: 100%"/>
+
+                        <p:spacer height="20px"/>
+
+                        <p:outputLabel value="Cidade   - #{configuracaoBean.configuracao.cidade.cidade}  #{configuracaoBean.configuracao.uf.uf}"/>
+
+                        <p:spacer height="10px"/>
+                        <p:outputLabel value="Bairro - #{configuracaoBean.configuracao.bairro}"/>
+
+                        <p:spacer height="10px"/>
+                        <p:outputLabel value="Rua - #{configuracaoBean.configuracao.rua}"/>
+
+                        <p:spacer height="10px"/>
+                        <p:outputLabel value="Nº - #{configuracaoBean.configuracao.numero}"/>
+
+                        <p:spacer height="10px"/>
+                        <p:outputLabel value="Email - #{configuracaoBean.configuracao.email}"/>
+
+                         <p:spacer height="10px"/>
+                         <p:outputLabel value="Cnpj - #{configuracaoBean.configuracao.cnpj}"/>
+                        
+                        <p:spacer height="10px"/>
+                        <p:outputLabel value="Celular -  #{configuracaoBean.configuracao.celular}"/> 
+
+                        <p:spacer height="10px"/>
+                        <p:outputLabel value="Fone - #{configuracaoBean.configuracao.fone}"/>
+
+                        <p:spacer height="10px"/>
+                        <p:outputLabel value="Porcentagem do Serviço - #{configuracaoBean.configuracao.porcentagemServico}%"/>
+
+                        <p:spacer height="10px"/>
+                        <p:outputLabel value="Entrada/Couvert - R$ #{configuracaoBean.configuracao.entrada_couvert}">
+                            <f:convertNumber minFractionDigits="2" type="currency" locale="pt-Br"/> 
+                        </p:outputLabel>
+
+                        <p:spacer height="10px"/>
+                        <p:outputLabel value="Tipo de Cobrança - #{configuracaoBean.configuracao.tipoCobranca}"/>
+
+                    </h:panelGrid>
+
+                </h:form>
+
+
+                <h:form styleClass="form" prependId="false" rendered="#{jsfUtil.formSalvarAlterar}">
+
+                    <div class="ui-grid ui-grid-responsive">
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-1"></div>
+                            <div class="ui-grid-col-3">                               
+                                <h3>Edição das configurações da empresa</h3>                              
+                            </div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel value="Empresa"/> 
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:inputText value="#{configuracaoBean.configuracao.empresa}" style="width:94%"
+                                             onblur="value = value.toUpperCase()"/>                                   
+                            </div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel value="Email"/> 
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:inputText value="#{configuracaoBean.configuracao.email}" style="width:94%"/>                                   
+                            </div>
+
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel value="Celular"/> 
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:inputMask mask="(999) - 99999-9999" id="celular" 
+                                             value="#{configuracaoBean.configuracao.celular}" 
+                                             style="width: 47%"/>                                 
+                            </div>
+
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel value="Fone"/> 
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:inputMask mask="(999) - 9999-9999" id="telefone" 
+                                             value="#{configuracaoBean.configuracao.fone}" 
+                                             style="width: 47%"/>                                  
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel value="Cnpf"/> 
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:inputMask mask="99.999.999/9999-99" id="cnpj" 
+                                             value="#{configuracaoBean.configuracao.cnpj}" 
+                                             style="width: 47%" validator="validaCnpj"/>                                    
+                            </div>
+
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel value="Uf"/> 
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:selectOneMenu id="uf" value="#{configuracaoBean.configuracao.uf}" 
+                                                 panelStyle="width:0px" converter="converterUf"
+                                                 effect="fade" var="u" style="width:35%" filter="true" 
+                                                 filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{configuracaoBean.listaUfs}" var="ufs" 
+                                                   itemLabel="#{ufs.uf}" itemValue="#{ufs}" />
+                                    <p:ajax event="change" listener="#{configuracaoBean.buscarCidadesPorUf(event)}" 
+                                            update=":cidade"/>
+                                    <p:column style="width:100%">
+                                        <h:outputText value="#{u.uf}"/>
+                                    </p:column>
+                                </p:selectOneMenu>                                   
+                            </div>
+
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel value="Cidade"/> 
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:selectOneMenu id="cidade" value="#{configuracaoBean.configuracao.cidade}" 
+                                                 panelStyle="width:0px" converter="converterCidade"
+                                                 effect="fade" var="cid" style="width:65%" filter="true" 
+                                                 filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{configuracaoBean.listaCidades}" var="cidade" 
+                                                   itemLabel="#{cidade.cidade}" itemValue="#{cidade}" />
+                                    <p:column style="width:100px">
+                                        <h:outputText value="#{cid.cidade}"/>
+                                    </p:column>
+                                </p:selectOneMenu>                                   
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel value="Bairro"/> 
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:inputText value="#{configuracaoBean.configuracao.bairro}" style="width:94%"
+                                             onblur="value = value.toUpperCase()"/>                                   
+                            </div>
+
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel value="Rua"/> 
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:inputText value="#{configuracaoBean.configuracao.rua}" style="width:94%"
+                                             onblur="value = value.toUpperCase()"/>                                   
+                            </div>
+
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel value="Número"/> 
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:inputText value="#{configuracaoBean.configuracao.numero}" style="width:47%"/>                                   
+                            </div>
+
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel value="Serviço (%)"/> 
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:inputMask mask="9?99" value="#{configuracaoBean.configuracao.porcentagemServico}" style="width:47%"/>                                   
+                            </div>
+
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel value="Cobrança"/> 
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:selectOneRadio id="tipo_cobranca" value="#{configuracaoBean.configuracao.tipoCobranca}">
+
+                                    <f:selectItem itemLabel="Mesa" itemValue="MESA"/>
+                                    <f:selectItem itemLabel="Cartão" itemValue="CARTÃO"/>
+                                </p:selectOneRadio>                                   
+                            </div>
+
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel for="valor" value="Entrada/Couvert"/> 
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:inputText value="#{configuracaoBean.configuracao.entrada_couvert}" style="width:47%"
+                                             id="valor" styleClass="moeda" onfocus="configurarMoeda(this)">
+                                             
+                                    <f:convertNumber minFractionDigits="2"/>
+                                </p:inputText>
+                            </div>                         
+                        </div>
+
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-1"></div>
+                            <div class="ui-grid-col-7">
+
+                                <p:commandButton icon="ui-icon-disk" value="Salvar" update=":panelConteudo"                               
+                                                 actionListener="#{configuracaoBean.salvarAlterarConfiguracoes}"
+                                                 rendered="#{jsfUtil.botaoSalvar}"/>
+
+                                <p:commandButton icon="ui-icon-pencil" value="Alterar" update=":panelConteudo"   
+                                                 actionListener="#{configuracaoBean.salvarAlterarConfiguracoes}" 
+                                                 rendered="#{jsfUtil.botaoAlterar}"/>
+
+                                <p:spacer width="3px"/>
+                                <p:commandButton icon="ui-icon-cancel" value="Cancelar" 
+                                                 update=":panelConteudo"
+                                                 actionListener="#{configuracaoBean.cancelar}" immediate="true" 
+                                                 process="@this"/>  
+                            </div>                   
+                        </div>
+
+
+                    </div>         
+                </h:form>
+
+            </p:outputPanel>
+
+            <h:form id="formDialogExcluir" prependId="false">
+                <p:confirmDialog  message="Deseja excluir os dados da empresa?"
+                                  header="Exclusão de Configurações" severity="alert"
+                                  widgetVar="dialogConfirmaExclusao">
+                    <p:commandButton value="Sim" action="#{configuracaoBean.excluirConfiguracoes}"
+                                     oncomplete="PF('dialogConfirmaExclusao').hide()" update=":panelConteudo toolbar" />
+                    <p:commandButton value="Não" 
+                                     oncomplete="PF('dialogConfirmaExclusao').hide()" update=":panelConteudo toolbar" >                       
+                    </p:commandButton>
+                </p:confirmDialog>
+            </h:form>
+        </f:view>
+    </ui:define>
+
+</ui:composition>

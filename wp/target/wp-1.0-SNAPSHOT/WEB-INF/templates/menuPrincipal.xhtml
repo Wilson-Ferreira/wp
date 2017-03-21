@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <h:body>
+        <h:form prependId="false" id="menuPrincipal">  
+
+            <p:menubar autoDisplay="false">
+
+                <p:menuitem value="Configurações" url="/admin/configuracao.xhtml"
+                            rendered="#{request.isUserInRole('ROLE_ADMIN')}"/> 
+
+                <p:menuitem value="Funcionários" url="/admin/funcionarios.xhtml"
+                             rendered="#{request.isUserInRole('ROLE_ADMIN')}"/> 
+                
+                <p:menuitem value="Usuários" url="/admin/usuarios.xhtml"
+                             rendered="#{request.isUserInRole('ROLE_ADMIN')}"/> 
+
+                <p:menuitem value="Clientes" url="/restrito/clientes.xhtml"/>
+
+                <p:menuitem value="Cardápio" url="/restrito/cardapio.xhtml"/>
+
+               
+                <p:submenu label="Pedidos">
+
+                    
+                    <p:menuitem value="Bar" outcome="/restrito/pedidos.xhtml"
+                                rendered="#{request.isUserInRole('ROLE_BAR')}"
+                                actionListener="#{pedidoBean.inicializar(event)}" >
+                        <f:param name="secao" value="bar" />               
+                    </p:menuitem>
+                    
+                   
+                    <p:menuitem value="Caixa" outcome="/restrito/pedidos.xhtml"
+                                rendered="#{request.isUserInRole('ROLE_CAIXA')}"
+                                actionListener="#{pedidoBean.inicializar(event)}" > 
+                         <f:param name="secao" value="caixa" />  
+                    </p:menuitem>
+
+                     <p:menuitem value="Cosinha" outcome="/restrito/pedidos.xhtml"
+                                rendered="#{request.isUserInRole('ROLE_COSINHA')}"
+                                actionListener="#{pedidoBean.inicializar(event)}" >
+                        <f:param name="secao" value="cosinha" />               
+                    </p:menuitem>
+
+                </p:submenu>
+                
+                 <p:menuitem value="Sair" url="/logout" />
+
+
+            </p:menubar>
+        </h:form> 
+    </h:body>
+</html>
+

@@ -1,0 +1,352 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="./../WEB-INF/templates/Layout.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="content">
+        <f:view>  
+
+            <f:metadata>
+                <f:viewAction action="#{pedidoBean.iniciarConversation()}"/>
+                <f:viewAction action="#{pedidoBean.inicializar(event)}"/>
+                <f:viewAction action="#{pedidoBean.buscarTipoDeCobranca()}"/>
+                <f:param name="secao" value="#{pedidoBean.secao}"/>
+            </f:metadata>
+
+            <h:form>
+                <p:poll interval="30" listener="#{pedidoBean.buscarTodosPedidos()}" 
+                        update=":panelConteudo :formTablePedidos :table"/>
+            </h:form>               
+
+            <p:outputPanel id="panelConteudo">
+
+                <div class="aw-page-title">             
+                    <p:outputPanel  id="info">
+                        <p:outputLabel value="Edição de pedidos #{pedidoBean.secao}"
+                                       rendered="#{jsfUtil.pageTitle}"/>
+                    </p:outputPanel>
+                </div>
+
+                <h:form id="toolbar" styleClass="ui-toolbar" prependId="false" 
+                        rendered="#{jsfUtil.toolbar}" > 
+
+                    <p:toolbar>
+                        <p:toolbarGroup align="left">
+
+                            <p:commandButton value="Novo" icon="ui-icon-disk" process="@this" immediate="true"
+                                             rendered="#{request.isUserInRole('ROLE_ADICIONAR_PEDIDOS')}"
+                                             action="#{pedidoBean.iniciarNovoPedido()}" />
+                          
+                            <p:commandButton value="Alterar" icon="ui-icon-pencil" process="@this" immediate="true"
+                                             rendered="#{request.isUserInRole('ROLE_ALTERAR_PEDIDOS')}"
+                                             disabled="#{pedidoBean.listaPedidosSelecionados == null}"
+                                             actionListener="#{pedidoBean.preparaAlterarPedido()}"
+                                             update=":panelConteudo" resetValues="true"/>
+                         
+                            <p:commandButton value="Excluir" icon="ui-icon-trash" process="@this" immediate="true"
+                                             rendered="#{request.isUserInRole('ROLE_EXCLUIR_PEDIDOS')}"
+                                             disabled="#{pedidoBean.listaPedidosSelecionados == null}"
+                                             actionListener="#{pedidoBean.preparaExcluirPedido}" 
+                                             update=":formDialogExcluir" resetValues="true"/>
+                           
+                            <p:commandButton icon="ui-icon-pencil" value="Alterar Status" process="@this" 
+                                             rendered="#{request.isUserInRole('ROLE_ALTERAR_STATUS_PEDIDOS')}"
+                                             disabled="#{pedidoBean.listaPedidosSelecionados == null}"
+                                             actionListener="#{pedidoBean.alterarStatusPedido}"                                             
+                                             resetValues="true" update=":panelConteudo">
+                            </p:commandButton> 
+                           
+                            <p:commandButton value="Calcular Conta"
+                                             rendered="#{request.isUserInRole('ROLE_CALCULAR_CONTAS')}"
+                                             disabled="#{pedidoBean.listaPedidosSelecionados == null}"
+                                             action="#{pedidoBean.preparaCalcularConta}"
+                                             update=":panelConteudo" resetValues="true">                                  
+                            </p:commandButton> 
+                            
+                            <p:commandButton value="Transferir pedidos" icon="ui-icon-pencil" process="@this" immediate="true"
+                                             rendered="#{request.isUserInRole('ROLE_TRANSFERIR_PEDIDOS') and jsfUtil.campoCartao}"  
+                                             disabled="#{pedidoBean.listaPedidosSelecionados == null}" 
+                                             actionListener="#{pedidoBean.preparaTransferirPedidos()}"
+                                             update=":panelConteudo" resetValues="true"/>                                            
+                           
+                        </p:toolbarGroup>
+
+                    </p:toolbar>
+
+                </h:form>
+
+
+                <h:form id="formCadastrar" styleClass="form" prependId="false" 
+                        rendered="#{jsfUtil.formSalvarAlterar}">
+
+                    <div class="ui-grid ui-grid-responsive">
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-5">                            
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <h3>Alteração de pedidos</h3>
+                            </div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"></div>
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel for="func" value="Funcionario "  />
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:selectOneMenu id="func" value="#{pedidoBean.pedido.funcionario}" 
+                                                 panelStyle="width:0px" converter="converterFuncionario"
+                                                 effect="fade" var="f" style="width:300px" filter="true" 
+                                                 filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Selecione" itemValue=""/>
+                                    <f:selectItems value="#{pedidoBean.listaFuncionarios}" var="funcionario" 
+                                                   itemLabel="#{funcionario.nome}" itemValue="#{funcionario}" />
+                                    <p:column style="width:10%">
+                                        <h:outputText value="#{f.nome}"/>
+                                    </p:column>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"></div>
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel for="categ" value="Categoria "  />
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:selectOneMenu id="categ" value="#{pedidoBean.pedido.itemCardapio.categoria}" 
+                                                 panelStyle="width:0px" converter="converterCategoria"
+                                                 effect="fade" var="c" style="width:150px" filter="true" 
+                                                 filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{pedidoBean.listaCategorias}" var="categ" 
+                                                   itemLabel="#{categ.categoria}" itemValue="#{categ}" />
+                                    <p:ajax event="change" listener="#{pedidoBean.buscarItemCardapioPorCategoria(event)}" 
+                                            update=":itemCardapio :qtde_itens_pedido"/>
+                                    <p:column style="width:10%">
+                                        <h:outputText value="#{c.categoria}"/>
+                                    </p:column>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"></div>
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel for="itemCardapio" value="Item"  />
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:selectOneMenu id="itemCardapio" value="#{pedidoBean.pedido.itemCardapio}"
+                                                 panelStyle="width:0px" converter="converterItemCardapio"
+                                                 effect="fade" var="item" style="width:300px" filter="true" 
+                                                 filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{pedidoBean.listaItensCardapio}" var="itemCardapio" 
+                                                   itemLabel="#{itemCardapio.nome}" itemValue="#{itemCardapio}"/>
+                                    <p:column style="width:10%">
+                                        <h:outputText value="#{item.nome}"/>
+                                    </p:column>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"></div>
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel for="qtde_itens_pedido" value="Quantidade"  />
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:selectOneMenu id="qtde_itens_pedido" value="#{pedidoBean.pedido.quantidade}"
+                                                 panelStyle="width:150px" converter="converterQuantidade"
+                                                 effect="fade" var="q" style="width:130px" filter="true" 
+                                                 filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Selecione" itemValue=""/>
+                                    <f:selectItems value="#{pedidoBean.listaQuantidade}" var="qtde" 
+                                                   itemLabel="#{qtde.quantString}" itemValue="#{qtde}"/>
+
+                                    <p:column style="width:10%">
+                                        <h:outputText value="#{q.quantString}"/>
+                                    </p:column>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"></div>
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel for="mesa" value="Mesa"  />
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:selectOneMenu id="mesa" value="#{pedidoBean.pedido.mesa}"  
+                                                 panelStyle="width:150px" converter="converterMesa"
+                                                 effect="fade" var="m" style="width:130px" filter="true" 
+                                                 filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Selecione" itemValue=""/>
+                                    <f:selectItems value="#{pedidoBean.listaMesas}" var="mesa" 
+                                                   itemLabel="#{mesa.numeroMesa}" itemValue="#{mesa}"/>
+                                    <p:column style="width:10%">
+                                        <h:outputText value="#{m.numeroMesa}"/>
+                                    </p:column>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"></div>
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel for="cartaoNumero" value="Cartão"
+                                               rendered="#{jsfUtil.campoCartao}"/>
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:selectOneMenu id="cartaoNumero" value="#{pedidoBean.pedido.cartao}"
+                                                 panelStyle="width:150px" converter="converterCartao"
+                                                 effect="fade" var="c" style="width:130px" filter="true" 
+                                                 filterMatchMode="startsWith" rendered="#{jsfUtil.campoCartao}">
+                                    <f:selectItem itemLabel="Selecione" itemValue=""/>
+                                    <f:selectItems value="#{pedidoBean.listaCartoesRetidos}" var="cartao" 
+                                                   itemLabel="#{cartao.numeroCartao}" itemValue="#{cartao}"/>
+
+                                    <p:column style="width:10%">
+                                        <h:outputText value="#{c.numeroCartao}"/>
+                                    </p:column>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+                        
+                          <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"></div>
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel for="cartaoParaTranferir" value="Cartão para tranferir" 
+                                               
+                                               rendered="#{jsfUtil.botaoTranferirPedidos and jsfUtil.campoCartao}"/>
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:selectOneMenu id="cartaoParaTranferir" value="#{pedidoBean.cartao}"
+                                                 panelStyle="width:150px" converter="converterCartao"
+                                                 effect="fade" var="c" style="width:130px" filter="true" 
+                                                 filterMatchMode="startsWith"  
+                                                 rendered="#{jsfUtil.botaoTranferirPedidos and jsfUtil.campoCartao}">
+                                    <f:selectItem itemLabel="Selecione" itemValue=""/>
+                                    <f:selectItems value="#{pedidoBean.listaCartoesRetidos}" var="cartaoTranferir" 
+                                                   itemLabel="#{cartaoTranferir.numeroCartao}" itemValue="#{cartaoTranferir}"/>
+
+                                    <p:column style="width:10%">
+                                        <h:outputText value="#{c.numeroCartao}"/>
+                                    </p:column>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+
+                      
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-5"></div>
+                            <div class="ui-grid-col-2">
+                                <p:commandButton icon="ui-icon-pencil" value="Alterar"
+                                                 actionListener="#{pedidoBean.alterarPedido()}" 
+                                                 update=":panelConteudo"                                            
+                                                 rendered="#{jsfUtil.botaoAlterar}"/>
+                                <p:spacer width="3px"/>
+                               
+                                 <p:commandButton icon="ui-icon-disk" value="Tranferir"
+                                                 actionListener="#{pedidoBean.tranferirPedidos()}" 
+                                                 update=":panelConteudo"                                            
+                                                 rendered="#{jsfUtil.botaoTranferirPedidos and jsfUtil.campoCartao}"/>
+                                  <p:spacer width="3px"/>
+                                  
+                                  <p:commandButton icon="ui-icon-cancel" process="@this" value="Cancelar" immediate="true" 
+                                                 actionListener="#{pedidoBean.cancelar()}" update=":panelConteudo :formTablePedidos :table"/>
+                            
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+
+                <h:form id="formTablePedidos"  prependId="false" rendered="#{jsfUtil.dataTable}">
+
+                    <p:dataTable var="pedido" value="#{pedidoBean.listaPedidos}" 
+                                 paginator="true" rows="17" paginatorPosition="bottom"
+                                 emptyMessage="Não há pedidos cadastrados" selection="#{pedidoBean.listaPedidosSelecionados}"
+                                 selectionMode="multiple" rowKey="#{pedido}" reflow="true" 
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 rowsPerPageTemplate="17,30,40" id="table" class="ui-datatable">
+
+                        <p:ajax event="rowSelect" listener="#{pedidoBean.onRowSelect(event)}" update=":panelConteudo :table"/>
+                        <p:ajax event="rowUnselect" listener="#{pedidoBean.onRowUnselect(event)}" update=":panelConteudo :table"/>
+
+                        <p:column headerText="Funcionário">               
+                            <h:outputText value="#{pedido.funcionario.nome}" /> 
+                        </p:column> 
+
+                        <p:column headerText="Cadastro" >                 
+                            <h:outputText value="#{pedido.dataPedido}"> 
+                                <f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>                                       
+                        </p:column>
+
+                        <p:column headerText="Mesa" filterBy="#{pedido.mesa.numeroMesa}" 
+                                  sortBy="#{pedido.mesa.numeroMesa}">                 
+                            <h:outputText value="#{pedido.mesa.numeroMesa}"/> 
+                        </p:column> 
+
+                        <p:column headerText="Cartão" filterBy="#{pedido.cartao.numeroCartao}" rendered="#{jsfUtil.campoCartao}"
+                                  sortBy="#{pedido.cartao.numeroCartao}">                 
+                            <h:outputText value="#{pedido.cartao.numeroCartao}" rendered="#{jsfUtil.campoCartao}"/> 
+                        </p:column> 
+
+
+                        <p:column headerText="Item"
+                                  sortBy="#{pedido.itemCardapio.nome}">                 
+                            <h:outputText value="#{pedido.itemCardapio.nome}" /> 
+                        </p:column> 
+
+                        <p:column headerText="Categoria">                 
+                            <h:outputText value="#{pedido.itemCardapio.categoria.categoria}" /> 
+                        </p:column>
+
+                        <p:column  headerText="Seção">                 
+                            <h:outputText value="#{pedido.itemCardapio.categoria.secao}" /> 
+                        </p:column> 
+
+                        <p:column headerText="Qtde">                 
+                            <h:outputText value="#{pedido.quantidade.quantString}" /> 
+                        </p:column>
+
+                        <p:column headerText="Valor Unitário">                 
+                            <h:outputText value="#{pedido.itemCardapio.valor}"> 
+                                <f:convertNumber minFractionDigits="2" type="currency" locale="pt-Br"/>                         
+                            </h:outputText>
+                        </p:column> 
+
+                        <p:column headerText="Total">                 
+                            <h:outputText value="#{pedido.quantidade.quantidade * pedido.itemCardapio.valor}"> 
+                                <f:convertNumber minFractionDigits="2" type="currency" locale="pt-Br"/>                         
+                            </h:outputText>
+                        </p:column> 
+
+                        <p:column headerText="Status">                        
+                            <h:outputText value="#{pedido.statusPedido}" /> 
+                        </p:column>
+                    </p:dataTable>
+                </h:form> 
+
+                <h:form id="formDialogExcluir" prependId="false">
+                    <p:confirmDialog  message="Deseja excluir?" style="font-size: 14px"
+                                      header="Exclusão de Pedido" severity="alert"
+                                      widgetVar="dialogConfirmaExclusao">
+                        <p:commandButton value="Sim" action="#{pedidoBean.excluirPedido}"
+                                         oncomplete="PF('dialogConfirmaExclusao').hide()" update=":panelConteudo :formTablePedidos :table"/>
+                        <p:commandButton value="Não" action="#{pedidoBean.cancelar()}"
+                                         oncomplete="PF('dialogConfirmaExclusao').hide()" update=":panelConteudo :formTablePedidos :table"/>                                     
+                    </p:confirmDialog>
+
+                </h:form>  
+            </p:outputPanel>
+
+
+        </f:view>
+    </ui:define>
+</ui:composition>

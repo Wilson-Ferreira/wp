@@ -1,0 +1,229 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="./../WEB-INF/templates/Layout.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="content">
+
+        <f:view>
+            <f:metadata>
+                <f:viewAction action="#{cardapioBean.buscarCardapioECategorias}"/>
+                <f:viewAction action="#{cardapioBean.iniciarConversation()}"/>
+            </f:metadata>
+
+            <p:outputPanel id="panelConteudo">
+
+                <div class="aw-page-title">             
+                    <p:outputPanel>
+                        <p:outputLabel value="Edição de itens do cardápio"
+                                       rendered="#{jsfUtil.pageTitle}"/>
+                    </p:outputPanel>
+                </div>
+
+                <h:form styleClass="ui-toolbar" id="toolbar" prependId="false" rendered="#{jsfUtil.toolbar}"> 
+                    <p:toolbar>
+                        <p:toolbarGroup align="left">
+
+
+                            <p:commandButton value="Novo Item" icon="ui-icon-disk" process="@this" immediate="true" 
+                                             rendered="#{request.isUserInRole('ROLE_ADICIONAR_NOVO_ITEM')}"
+                                             actionListener="#{cardapioBean.preparaSalvarItemCardapio}"
+                                             update=":panelConteudo" resetValues="true"/> 
+                            
+                            <p:commandButton value="Alterar" icon="ui-icon-pencil" process="@this" immediate="true"
+                                             rendered="#{request.isUserInRole('ROLE_ALTERAR_ITEM')}"
+                                             disabled="#{cardapioBean.listaItensSelecionados == null}"
+                                             actionListener="#{cardapioBean.preparaAlterarItemCardapio}"
+                                             update=":panelConteudo" resetValues="true"/> 
+                           
+                            <p:commandButton value="Excluir" icon="ui-icon-trash" process="@this" immediate="true"
+                                             rendered="#{request.isUserInRole('ROLE_EXCLUIR_ITEM')}"
+                                             disabled="#{cardapioBean.listaItensSelecionados == null}"
+                                             actionListener="#{cardapioBean.preparaExcluirItemCardapio}" 
+                                             update=":formDialogExcluir" resetValues="true"/>
+                          
+                            <p:commandButton value="Iniciar pedido" icon="ui-icon-disk" process="@this" immediate="true"
+                                             rendered="#{request.isUserInRole('ROLE_INICIAR_PEDIDO')}"
+                                             disabled="#{cardapioBean.listaItensSelecionados == null}"
+                                             action="#{cardapioBean.iniciarPedido}"/> 
+                            
+                        </p:toolbarGroup>
+
+                    </p:toolbar>
+                </h:form>
+
+                <h:form styleClass="form" prependId="false" rendered="#{jsfUtil.formSalvarAlterar}">
+
+                    <div class="ui-grid ui-grid-responsive">
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-5"></div>
+                            <div class="ui-grid-col-3">
+                                <h3>Cadastro e alteração de itens do cardápio</h3>
+                            </div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"></div>
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel for="categ" value="Categoria"/>
+                            </div>
+
+                            <div class="ui-grid-col-2">
+                                <p:selectOneMenu id="categ" value="#{cardapioBean.itemCardapio.categoria}" 
+                                                 panelStyle="width:0px" converter="converterCategoria"
+                                                 effect="fade" var="c" style="width:95%" filter="true" 
+                                                 filterMatchMode="startsWith">
+                                    <f:selectItem itemLabel="Selecione" itemValue=""/>
+                                    <f:selectItems value="#{cardapioBean.listaCategorias}" 
+                                                   var="categ" itemLabel="#{categ.categoria}" itemValue="#{categ}" />
+                                    <p:column style="width:100%">
+                                        <h:outputText value="#{c.categoria}"/>
+                                    </p:column>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"></div>
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel for="nome" value="Item *"/>
+                            </div>
+
+                            <div class="ui-grid-col-3">
+                                <p:inputText id="nome" value="#{cardapioBean.itemCardapio.nome}" 
+                                             style="width:93%" onblur="value = value.toUpperCase()"/>
+                            </div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"></div>
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel for="valor" value="Valor"/>
+                            </div>
+
+                            <div class="ui-grid-col-2">
+                                <p:inputText styleClass="moeda" id="valor" onfocus="configurarMoeda(this)"
+                                             value="#{cardapioBean.itemCardapio.valor}" style="width:47%"
+                                             validator="validaValor">
+                                    <f:convertNumber minFractionDigits="2"/>
+                                </p:inputText>
+                            </div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"></div>
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel for="status" value="Disponível"/>
+
+                            </div>
+                            <div class="ui-grid-col-2">
+                                <p:selectOneRadio id="status" value="#{cardapioBean.itemCardapio.disponivel}">                                                                              
+                                    <f:selectItem itemLabel="Sim" itemValue="#{true}" />
+                                    <f:selectItem itemLabel="Não" itemValue="#{false}" />
+                                </p:selectOneRadio>
+                            </div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-4"></div>
+                            <div class="ui-grid-col-1">
+                                <p:outputLabel for="descricao" value="Descrição"/>                    
+                            </div>
+                            <div class="ui-grid-col-3">
+                                <p:inputTextarea id="descricao" rows="6" cols="71" style="width:93%"
+                                                 onblur="value = value.toUpperCase()"
+                                                 value="#{cardapioBean.itemCardapio.descricao}"/>
+                            </div>
+                        </div>
+
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-5"></div>
+                            <div class="ui-grid-col-7">
+
+                                <p:commandButton icon="ui-icon-disk" value="Salvar" update=":panelConteudo :table"                               
+                                                 actionListener="#{cardapioBean.salvarAlterarItemCardapio}"
+                                                 rendered="#{jsfUtil.botaoSalvar}"/>
+
+                                <p:commandButton icon="ui-icon-pencil" value="Alterar" update=":panelConteudo :table"   
+                                                 actionListener="#{cardapioBean.salvarAlterarItemCardapio}" 
+                                                 rendered="#{jsfUtil.botaoAlterar}"/>
+
+                                <p:spacer width="3px"/>
+                                <p:commandButton icon="ui-icon-cancel" value="Cancelar" 
+                                                 update=":panelConteudo"
+                                                 actionListener="#{cardapioBean.cancelar}" immediate="true" 
+                                                 process="@this"/>  
+                            </div>                   
+                        </div>
+                    </div>
+                </h:form>
+
+                <h:form id="tableCardapio" prependId="false" rendered="#{jsfUtil.dataTable}" >
+
+                    <p:dataTable var="cardapio" value="#{cardapioBean.listaItensCardapio}" paginator="true" rows="16" paginatorPosition="bottom"
+                                 emptyMessage="Não há ítens cadastrados" selection="#{cardapioBean.listaItensSelecionados}"
+                                 selectionMode="multiple" rowKey="#{cardapio.id}" reflow="true"  
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 rowsPerPageTemplate="16,30,40" id="table" class="ui-datatable">
+
+                        <p:ajax event="rowSelect" listener="#{cardapioBean.onRowSelect(event)}" update=":panelConteudo :table"/>
+                        <p:ajax event="rowUnselect" listener="#{cardapioBean.onRowUnselect(event)}" update=":panelConteudo :table"/>
+
+
+                        <p:column headerText="Itens" filterBy="#{cardapio.nome}" 
+                                  sortBy="#{cardapio.nome}">                 
+                            <h:outputText value="#{cardapio.nome}" /> 
+
+                        </p:column> 
+
+
+                        <p:column headerText="Seção">                 
+                            <h:outputText value="#{cardapio.categoria.secao}" /> 
+                        </p:column> 
+
+                        <p:column headerText="Categoria">                 
+                            <h:outputText value="#{cardapio.categoria.categoria}" /> 
+                        </p:column> 
+
+
+
+                        <p:column headerText="Valor">                 
+                            <h:outputText value="#{cardapio.valor}"> 
+                                <f:convertNumber minFractionDigits="2" type="currency" locale="pt-Br"/>                         
+                            </h:outputText>
+                        </p:column> 
+
+
+                        <p:column  headerText="Descrição">                 
+                            <h:outputText value="#{cardapio.descricao}" /> 
+                        </p:column>
+
+                        <p:column headerText="Disponível">                 
+                            <p:graphicImage name="select.png" library="imagens"
+                                            style="width: 20px;height: 20px" rendered="#{cardapio.disponivel}"/>
+                        </p:column> 
+                    </p:dataTable>
+                </h:form>  
+            </p:outputPanel>
+
+            <h:form id="formDialogExcluir" prependId="false">
+
+                <p:confirmDialog  message="Deseja excluir?"
+                                  header="Exclusão de Item do cardápio" severity="alert"
+                                  widgetVar="dialogConfirmaExclusao">
+                    <p:commandButton value="Sim" action="#{cardapioBean.excluirItemCardapio}"
+                                     oncomplete="PF('dialogConfirmaExclusao').hide()" update=":panelConteudo :tableCardapio :table"/>
+                    <p:commandButton value="Não" action="#{cardapioBean.cancelar()}"
+                                     oncomplete="PF('dialogConfirmaExclusao').hide()" update=":panelConteudo :tableCardapio :table"/>
+                </p:confirmDialog>
+            </h:form>
+
+        </f:view>
+    </ui:define> 
+</ui:composition>
+

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pedidos" pageWidth="500" pageHeight="400" orientation="Landscape" columnWidth="460" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="6089eb44-800f-4a9b-95e5-60ce9a3cfc5d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="qtde" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nomeItem" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="valor" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="qtde_vezes_valor" class="java.math.BigDecimal"/>
+	<field name="sub_total" class="java.math.BigDecimal"/>
+	<field name="porc_servico" class="java.math.BigDecimal"/>
+	<field name="entrada_couvert" class="java.math.BigDecimal"/>
+	<field name="total" class="java.math.BigDecimal"/>
+	<field name="mesa_cartao" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="22" splitType="Stretch"/>
+	</title>
+	<columnHeader>
+		<band height="29" splitType="Stretch">
+			<staticText>
+				<reportElement x="67" y="2" width="199" height="20" uuid="c40ca9e7-998d-492c-8b17-f7ebfff6e281"/>
+				<text><![CDATA[Item]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="2" width="37" height="20" uuid="395f3d21-6f37-46f9-ad7b-0b1461e3edad"/>
+				<text><![CDATA[Qtde]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="303" y="2" width="79" height="20" uuid="34c2fa0a-dc35-437b-ba49-4e0697254404"/>
+				<text><![CDATA[ ValorUnitário]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="382" y="2" width="78" height="20" uuid="bb367416-b2cf-482a-87dc-cc88aa185cd7"/>
+				<text><![CDATA[Qtde(X)Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="2" width="65" height="20" uuid="cbcaa262-7dbf-43e2-a0e4-2caeefc316c3"/>
+				<text><![CDATA[Mesa/Cartão]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="22" width="458" height="1" uuid="ddcf05ed-dd77-4764-9105-606dee00856e"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement x="67" y="0" width="199" height="20" uuid="b594a565-f9b9-4a24-a3e3-ef621f8a7940"/>
+				<textFieldExpression><![CDATA[$F{nomeItem}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="382" y="0" width="78" height="20" uuid="d4691427-134f-49c6-b2d4-fd424d8b8a41"/>
+				<textFieldExpression><![CDATA[$F{qtde_vezes_valor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="266" y="0" width="37" height="20" uuid="ce193446-9039-466c-af59-61ea56f6cd25"/>
+				<textFieldExpression><![CDATA[$F{qtde}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="0" width="65" height="20" uuid="2bc14642-bb87-4cbe-aeba-9f987f15f966"/>
+				<textFieldExpression><![CDATA[$F{mesa_cartao}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="2" y="20" width="458" height="2" uuid="19a7b6a8-6eb9-45a5-a0d4-d5f22a3ac121"/>
+			</line>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="303" y="0" width="79" height="20" uuid="545ccc16-124f-47aa-9048-5128530317af"/>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="83">
+			<textField pattern="¤ #,##0.00">
+				<reportElement positionType="Float" x="382" y="0" width="78" height="20" uuid="0cd9438d-9830-4b20-851a-3edf93c56cef"/>
+				<textFieldExpression><![CDATA[$F{sub_total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="303" y="0" width="79" height="20" uuid="76c0b881-0c0b-4af0-960c-b4d4b5d595ae"/>
+				<text><![CDATA[Sub-Total]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="382" y="21" width="78" height="20" uuid="1a9543f4-7d82-4ef4-90d3-3c4533f611be"/>
+				<textFieldExpression><![CDATA[$F{porc_servico}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="382" y="41" width="78" height="20" uuid="4803874c-ff7e-4041-b60e-498593ce0e42"/>
+				<textFieldExpression><![CDATA[$F{entrada_couvert}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="303" y="22" width="79" height="20" uuid="33a58f86-dfb3-4fa9-9395-4f60b5100a6f"/>
+				<text><![CDATA[(%) Serviço]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="303" y="44" width="79" height="17" uuid="b60f579f-e19e-4fc6-b4d2-56b30fbf4069"/>
+				<text><![CDATA[Ent/Couvert]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="303" y="62" width="79" height="20" uuid="43fc5ae8-4d5f-44a9-ac8d-b4b8bd9bf49e"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="382" y="63" width="78" height="19" uuid="a7dd4e9b-a6a7-4257-a556-2492826d7cfe"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>
