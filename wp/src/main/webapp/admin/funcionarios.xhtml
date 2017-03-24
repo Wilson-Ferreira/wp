@@ -33,7 +33,7 @@
                                              update=":panelConteudo" resetValues="true"
                                              action="#{funcionarioBean.preparaSalvarFuncionario}"/>                                        
 
-                        
+
                             <p:commandButton value="Alterar" icon="ui-icon-pencil" process="@this" immediate="true"
                                              update=":panelConteudo" resetValues="true" 
                                              disabled="#{funcionarioBean.funcionario.id == null}"                                        
@@ -56,22 +56,13 @@
                                  rowsPerPageTemplate="17,30,40" id="table" class="ui-datatable">
                         <p:ajax event="rowSelect" update=":panelConteudo"/>
 
+                        <p:column>
+                            <p:rowToggler />
+                        </p:column>
+
                         <p:column headerText="Funcionário"
                                   sortBy="#{funcionario.nome}" filterBy="#{funcionario.nome}"  >                 
                             <h:outputText value="#{funcionario.nome}"/> 
-                        </p:column> 
-
-                        <p:column headerText="Nasc" >                 
-                            <h:outputText value="#{funcionario.dataNascimento}"> 
-                                <f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>
-                        </p:column> 
-
-                        <p:column headerText="Cpf" >                 
-                            <h:outputText value="#{funcionario.cpf}"/> 
-                        </p:column> 
-
-                        <p:column headerText="Rg" >                 
-                            <h:outputText value="#{funcionario.rg}" /> 
                         </p:column> 
 
                         <p:column headerText="Fone">                 
@@ -86,25 +77,41 @@
                             <h:outputText value="#{funcionario.email}"/> 
                         </p:column> 
 
-                        <p:column headerText="Cidade">                 
-                            <h:outputText value="#{funcionario.cidade.cidade} - #{funcionario.uf.uf}"/> 
-                        </p:column> 
 
-                        <p:column headerText="Bairro">                 
-                            <h:outputText value="#{funcionario.bairro}" /> 
-                        </p:column> 
+                        <p:rowExpansion>
+                            <p:spacer height="15px"/>
+                            <p:panelGrid  columns="8" columnClasses="label,value">
 
-                        <p:column headerText="Nº">                 
-                            <h:outputText value="#{funcionario.numero}" /> 
-                        </p:column> 
+                                <h:outputText value="Nascimento"/>                 
+                                <h:outputText value="#{funcionario.dataNascimento}"> 
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
 
-                        <p:column headerText="Cep">                 
-                            <h:outputText value="#{funcionario.cep}" /> 
-                        </p:column> 
+                                <h:outputText value="Cargo"/>                 
+                                <h:outputText value="#{funcionario.cargo.cargo}" /> 
 
-                        <p:column headerText="Cargo">                 
-                            <h:outputText value="#{funcionario.cargo.cargo}" /> 
-                        </p:column> 
+                                <h:outputText value="Cpf"/>                 
+                                <h:outputText value="#{funcionario.cpf}"/> 
+
+                                <h:outputText value="Rg"/>                  
+                                <h:outputText value="#{funcionario.rg}" /> 
+
+                                <h:outputText value="Cidade"/>                 
+                                <h:outputText value="#{funcionario.cidade.cidade} - #{funcionario.uf.uf}"/> 
+
+                                <h:outputText value="Bairro"/>                 
+                                <h:outputText value="#{funcionario.bairro}" /> 
+
+                                <h:outputText value="Número"/>                 
+                                <h:outputText value="#{funcionario.numero}" /> 
+
+                                <h:outputText value="Cep"/>                 
+                                <h:outputText value="#{funcionario.cep}" /> 
+
+                            </p:panelGrid>
+                            <p:spacer height="15px"/>
+                        </p:rowExpansion>
+
                     </p:dataTable>
                 </h:form>
 
