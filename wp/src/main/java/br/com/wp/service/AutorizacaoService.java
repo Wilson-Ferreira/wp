@@ -16,6 +16,7 @@ import javax.inject.Inject;
  *
  * @author Wilson F Florindo
  */
+
 public class AutorizacaoService implements Serializable{
 
    

@@ -64,6 +64,7 @@ br\com\wp\enumeracao\StatusCartao.class
 br\com\wp\repositorio\QuantidadeRepositorio.class
 br\com\wp\repositorio\ClienteRepositorio.class
 br\com\wp\converter\DataConverter.class
+br\com\wp\enumeracao\NumeroCartao.class
 br\com\wp\util\CDIServiceLocator.class
 br\com\wp\converter\CargoConverter.class
 br\com\wp\converter\ConverterItemCardapio.class
@@ -89,6 +90,7 @@ br\com\wp\repositorio\UfRepositorio.class
 br\com\wp\modelo\Uf.class
 br\com\wp\repositorio\FuncionarioRepositorio.class
 service\CartaoREST.class
+br\com\wp\enumeracao\QuantidadeUm.class
 br\com\wp\util\GerarTabelas.class
 service\CategoriaREST.class
 br\com\wp\util\ControleContrato.class

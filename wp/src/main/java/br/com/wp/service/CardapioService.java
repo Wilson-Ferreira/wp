@@ -42,6 +42,5 @@ public class CardapioService implements Serializable {
       
         return cardapioRepositorio.buscarItemCardapioPorCategoria(id);
     }
-
-   
+ 
 }

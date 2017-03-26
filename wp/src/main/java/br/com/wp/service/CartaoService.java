@@ -30,13 +30,7 @@ public class CartaoService implements Serializable{
         return cartaoRepositorio.buscarCartoesLiberados(statusLiberado);
         
     }
-    
-    //método utilizado pelo aplicativo android
-     public List<Cartao> buscarTodosCartoes()throws Exception {
-       
-        return cartaoRepositorio.buscarTodosCartoes();
-        
-    }
+  
      
       public List<Cartao> buscarCartoesRetidos(StatusCartao statusRetido)throws Exception {
        

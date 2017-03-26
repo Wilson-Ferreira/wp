@@ -16,6 +16,7 @@ import javax.inject.Inject;
  *
  * @author Wilson F Florindo
  */
+
 public class QuantidadeService implements Serializable{
     
     @Inject
@@ -25,14 +26,7 @@ public class QuantidadeService implements Serializable{
       
         return quantidadeRepositorio.buscarQuantidadePorId(id);
     }
-/*
-    public List<Quantidade> buscarQuantidadePorSecao(String secao)throws Exception {
-       
-        return  quantidadeRepositorio.buscarQuantidadePorSecao(secao);
-        
-        
-    }
-*/
+
     public List<Quantidade> buscarQuantidade()throws Exception {
         
         return quantidadeRepositorio.buscarQuantidade();

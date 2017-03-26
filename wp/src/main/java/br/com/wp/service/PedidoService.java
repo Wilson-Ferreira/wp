@@ -76,11 +76,6 @@ public class PedidoService implements Serializable {
         
     }
 
-    /**
-     *
-     * @param listaPedidosSelecionados
-     * @throws Exception
-     */
     @Transactional
     public void excluirPedidos(List<Pedido> listaPedidosSelecionados)throws Exception {
         
