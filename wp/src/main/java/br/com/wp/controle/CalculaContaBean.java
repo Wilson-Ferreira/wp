@@ -105,7 +105,7 @@ public class CalculaContaBean implements Serializable {
         
         try {
             
-            buscarConfiguracoes();
+            //buscarConfiguracoes();
             
             listaPedidosPagar = new ArrayList<>();
             
@@ -141,10 +141,13 @@ public class CalculaContaBean implements Serializable {
         try {
             
             pedidoService.alterarStatusParaPago(listaPedidosPagar);
-            liberarCartoesPagos();
             
-            jsfUtil.addMensagemInfo("CÃ¡lculo finalizado com sucesso");
-            jsfUtil.adicionarMensagemNoScopedFlash();
+            if(configuracao.getTipoCobranca().equalsIgnoreCase(TipoCobranca.CARTÃO.toString())){
+            liberarCartoesPagos();
+            }
+            
+            jsfUtil.addMensagemInfo("Cálculo finalizado com sucesso");
+            jsfUtil.adicionarMensagemNoScopedFlash(); 
             
             pedidoBean.encerrarConversation();
             
@@ -159,9 +162,10 @@ public class CalculaContaBean implements Serializable {
                 
             } else {
                 
-                jsfUtil.addMensagemErro("Ocorreu um erro no banco de dados, informe o administrador!");
+                jsfUtil.addMensagemErro("Ocorreu um erro no banco de dados, informe o administrador!"+ex.getMessage());
             }
         }
+       
         return "pedidos?faces-redirect=true;";
         
     }
@@ -196,7 +200,7 @@ public class CalculaContaBean implements Serializable {
     
     public String cancelarCalculo() {
         
-        jsfUtil.addMensagemInfo("CÃ¡lculo cancelado");
+        jsfUtil.addMensagemInfo("Cálculo cancelado");
         
         jsfUtil.adicionarMensagemNoScopedFlash();
         pedidoBean.encerrarConversation();
@@ -238,7 +242,7 @@ public class CalculaContaBean implements Serializable {
       
         if (configuracao.getEntrada_couvert().intValue() <= 0 && configuracao.getPorcentagemServico() <= 0) {
             
-            jsfUtil.addMensagemInfo("NÃ£o hÃ¡ valores definidos para cobranÃ§a de Entrada/Couvert e (%) ServiÃ§o");
+            jsfUtil.addMensagemInfo("NÃo há¡ valores definidos para cobrança de Entrada/Couvert e (%) Serviço");
             
             calcularConta();
             
