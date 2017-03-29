@@ -50,8 +50,7 @@ public class AutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
         try {
 
             senhaCriptografada = criptografarSenha.criptografarSenha(senha);
-            // System.out.println("senhaCriptografada " + senhaCriptografada);
-
+           
             usuarioLogado = usuarioService.autenticarUsuario(login, senhaCriptografada);
 
             if (usuarioLogado.getStatusLogin().toString().equalsIgnoreCase(StatusLogin.INATIVO.toString())) {
@@ -85,7 +84,7 @@ public class AutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, Authentication authResult) throws IOException, ServletException {
 
         SecurityContextHolder.getContext().setAuthentication(authResult);
-        response.sendRedirect("restrito/pedidos.xhtml");
+        response.sendRedirect("restrito/index.xhtml");
     }
 
     @Override

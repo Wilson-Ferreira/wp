@@ -11,7 +11,7 @@ package br.com.wp.enumeracao;
  */
 public enum StatusPedido {
     
-    PROCESSADO,
-    PROCESSANDO,
+    ABERTO,
+    FECHADO,
     PAGO;
 }

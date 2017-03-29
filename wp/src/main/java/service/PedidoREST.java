@@ -28,6 +28,7 @@ import javax.ws.rs.Produces;
  *
  * @author Wilson F Florindo
  */
+
 @Path("/pedido")
 public class PedidoREST {
 
@@ -49,10 +50,9 @@ public class PedidoREST {
     @Produces("application/json")
     public String salvarPedidos(String jsonPedido) {
 
-        
-        System.out.println("strPedido " + jsonPedido);
-
+    
         try {
+            
             Gson gson = new Gson();
 
             Type type = new TypeToken<List<Pedido>>() {
@@ -69,8 +69,6 @@ public class PedidoREST {
 
             for (Pedido p : listaPedidos) {
 
-                System.out.println("mesa "+p.getMesa().getNumeroMesa());
-                System.out.println("cartao "+p.getCartao().getNumeroCartao());
                 if (configuracao.getTipoCobranca().equalsIgnoreCase(TipoCobranca.MESA.toString())) {
 
                     p.setCartao(cartao);
@@ -82,7 +80,7 @@ public class PedidoREST {
         } catch (Exception ex) {
 
            return "Erro ao salvar";
-            //Logger.getLogger(PedidoREST.class.getName()).log(Level.SEVERE, null, ex);
+          
         }
         return "Pedidos salvos";
     }

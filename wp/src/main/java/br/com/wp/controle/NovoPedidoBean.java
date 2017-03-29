@@ -134,7 +134,7 @@ public class NovoPedidoBean implements Serializable {
             for (Cardapio cardapio : cardapioBean.getListaItensSelecionados()) {
 
                 pedido.setItemCardapio(cardapio);
-                pedido.setStatusPedido(StatusPedido.PROCESSANDO);
+                pedido.setStatusPedido(StatusPedido.ABERTO);
 
                 pedido.setQuantidade(quantidade);
 
@@ -181,7 +181,7 @@ public class NovoPedidoBean implements Serializable {
                 }
 
                 if (p.getId() == null) {
-                    ped.setStatusPedido(StatusPedido.PROCESSANDO);
+                    ped.setStatusPedido(StatusPedido.ABERTO);
                     ped.setDataPedido(date);
                 }
 

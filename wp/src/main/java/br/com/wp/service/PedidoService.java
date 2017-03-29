@@ -5,7 +5,7 @@ import br.com.wp.modelo.Cartao;
 import br.com.wp.modelo.Pedido;
 import br.com.wp.enumeracao.StatusPedido;
 import static br.com.wp.enumeracao.StatusPedido.PAGO;
-import static br.com.wp.enumeracao.StatusPedido.PROCESSADO;
+import static br.com.wp.enumeracao.StatusPedido.FECHADO;
 import br.com.wp.repositorio.PedidoRepositorio;
 import java.io.Serializable;
 import java.util.List;
@@ -32,13 +32,13 @@ public class PedidoService implements Serializable {
 
         listaPedidosSelecionados.stream().forEach((pedido) -> {
             
-            if (pedido.getStatusPedido().equals(PROCESSADO)) {
+            if (pedido.getStatusPedido().equals(FECHADO)) {
                 
-                pedido.setStatusPedido(StatusPedido.PROCESSANDO);
+                pedido.setStatusPedido(StatusPedido.ABERTO);
                 
             } else {
                 
-                pedido.setStatusPedido(PROCESSADO);
+                pedido.setStatusPedido(FECHADO);
             }
         });
 

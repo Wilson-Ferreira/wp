@@ -23,7 +23,7 @@
     </session-config>
     
     <welcome-file-list>
-        <welcome-file>restrito/pedidos.xhtml</welcome-file>
+        <welcome-file>restrito/index.xhtml</welcome-file>
     </welcome-file-list>
   
     <!-- Spring security -->  

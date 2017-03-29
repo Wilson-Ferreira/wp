@@ -162,7 +162,7 @@ public class PedidoBean implements Serializable {
 
             } else {
 
-                listaPedidos = pedidoService.buscarPedidosNaoPagosPorSecao(StatusPedido.PAGO, StatusPedido.PROCESSANDO, secao);
+                listaPedidos = pedidoService.buscarPedidosNaoPagosPorSecao(StatusPedido.PAGO, StatusPedido.ABERTO, secao);
             }
 
         } catch (Exception ex) {
