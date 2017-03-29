@@ -176,7 +176,7 @@ public class PedidoBean implements Serializable {
 
             } else {
 
-                jsfUtil.addMensagemErro("Ocorreu um erro no banco de dados, informe o administrador!" + ex.getMessage());
+                jsfUtil.addMensagemErro("Ocorreu um erro no banco de dados, informe o administrador!");
             }
         }
     }
@@ -185,7 +185,11 @@ public class PedidoBean implements Serializable {
 
         try {
 
+            if(tipoDeCobranca.equalsIgnoreCase(TipoCobranca.CARTÃO.toString())){
+                
             listaCartoesRetidos = cartaoService.buscarCartoesRetidos(StatusCartao.RETIDO);
+            }
+            
             listaMesas = mesaService.buscarTodasMesas();
             listaFuncionarios = funcionarioService.buscarFuncionarioPorCargo(TipoCargo.GARÇÕN.toString());
             listaCategorias = categoriaService.buscarCategorias(NomeCategoria.TODAS);
