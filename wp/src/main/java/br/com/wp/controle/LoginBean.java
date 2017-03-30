@@ -9,9 +9,9 @@ import br.com.wp.modelo.Usuario;
 import br.com.wp.util.ControleContrato;
 import java.io.IOException;
 import java.io.Serializable;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.RequestDispatcher;
@@ -24,24 +24,27 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Wilson F Florindo
  */
+
 @Named
-@SessionScoped
+@ViewScoped
 public class LoginBean implements Serializable {
 
     private String username;
     private String password;
+    @Inject
     private Usuario usuarioLogado;
 
     @Inject
     private ControleContrato controleContrato;
 
-    public LoginBean() {
+    
+    public void buscarUsuarioNaSessao() {
+       
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        request.getSession().setAttribute("usuarioLogado", usuarioLogado);
-
+        usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
     }
-
+   
     public String autenticarUsuario() throws ServletException, IOException {
 
         /* if(controleContrato.vericaVencimentoContrato()){

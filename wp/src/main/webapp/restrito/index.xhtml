@@ -2,14 +2,26 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns="http://www.w3.org/1999/xhtml"
-                template="./../WEB-INF/templates/Layout.xhtml">
+                template="./../WEB-INF/templates/Layout.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="content">
+
+        <f:metadata>
+            <f:viewAction action="#{loginBean.buscarUsuarioNaSessao()}"/>
+        </f:metadata>
         
-         <div align="center">
-           <h1>Bom trabalho #{loginBean.usuarioLogado.funcionario.nome}</h1>
-        </div>
-       
+        <h:body style="background-color: #cccccc">
+            <div align="center" >
+                <p:spacer height="80px"/>
+                
+                <h1>Bom trabalho</h1> <br></br> 
+                <h1> #{loginBean.usuarioLogado.funcionario.nome}</h1>
+                
+            </div>
+        </h:body>
     </ui:define>
 
 </ui:composition>

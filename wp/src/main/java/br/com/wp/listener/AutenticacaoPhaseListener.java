@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author User
+ * @author Wilson F Florindo
  */
 public class AutenticacaoPhaseListener implements PhaseListener{
     
@@ -27,6 +27,7 @@ public class AutenticacaoPhaseListener implements PhaseListener{
     public void beforePhase(PhaseEvent event) {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+      
         if (session != null) {
             String mensagem = (String) session.getAttribute("msg");
  

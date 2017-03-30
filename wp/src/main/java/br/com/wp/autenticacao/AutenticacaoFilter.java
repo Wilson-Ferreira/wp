@@ -12,10 +12,12 @@ import br.com.wp.util.CDIServiceLocator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -29,14 +31,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  *
  * @author Wilson F Florindo
  */
-
 public class AutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
 
     private final CriptografarSenha criptografarSenha = CDIServiceLocator.getBean(CriptografarSenha.class);
     private final UsuarioService usuarioService = CDIServiceLocator.getBean(UsuarioService.class);
-   
-    @Inject
-    private Usuario usuarioLogado;
+
+    private Usuario usuarioLogado = CDIServiceLocator.getBean(Usuario.class);
+
+    //@Inject
+    //private Usuario usuarioLogado;
     private String mensagem;
     private String senhaCriptografada;
 
@@ -50,7 +53,7 @@ public class AutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
         try {
 
             senhaCriptografada = criptografarSenha.criptografarSenha(senha);
-           
+
             usuarioLogado = usuarioService.autenticarUsuario(login, senhaCriptografada);
 
             if (usuarioLogado.getStatusLogin().toString().equalsIgnoreCase(StatusLogin.INATIVO.toString())) {
@@ -66,8 +69,10 @@ public class AutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
                     regras.add(new SimpleGrantedAuthority(ua.getId().getAutorizacao().getTipo()));
                 });
 
-                request.getSession().setAttribute("usuarioLogado", usuarioLogado);
-
+                FacesContext fc = FacesContext.getCurrentInstance();
+                HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+                session.setAttribute("usuarioLogado", usuarioLogado);
+              
                 return new UsernamePasswordAuthenticationToken(login, senha, regras);
 
             } else {
@@ -93,8 +98,7 @@ public class AutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
         if (mensagem.isEmpty()) {
             mensagem = "Login e/ou senha inválidos";
         }
-            request.getSession().setAttribute("msg", mensagem);
-            response.sendRedirect("login.xhtml");
-        }
+        request.getSession().setAttribute("msg", mensagem);
+        response.sendRedirect("login.xhtml");
     }
-
+}
