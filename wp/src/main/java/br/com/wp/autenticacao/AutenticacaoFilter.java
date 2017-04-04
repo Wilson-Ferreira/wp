@@ -31,15 +31,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  *
  * @author Wilson F Florindo
  */
+
 public class AutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
 
     private final CriptografarSenha criptografarSenha = CDIServiceLocator.getBean(CriptografarSenha.class);
     private final UsuarioService usuarioService = CDIServiceLocator.getBean(UsuarioService.class);
 
-    private Usuario usuarioLogado = CDIServiceLocator.getBean(Usuario.class);
-
-    //@Inject
-    //private Usuario usuarioLogado;
+    @Inject
+    private Usuario usuarioLogado;
     private String mensagem;
     private String senhaCriptografada;
 

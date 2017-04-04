@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Wilson F Florindo
  */
+
 public class AutenticacaoPhaseListener implements PhaseListener{
     
      @Override

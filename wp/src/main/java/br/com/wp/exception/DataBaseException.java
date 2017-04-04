@@ -16,15 +16,16 @@ import java.util.regex.Pattern;
 
 /**
  *
- * @author User
+ * @author Wilson F Florindo
  */
+
 public class DataBaseException extends SQLException {
     
-     private String mensagemFormatada;
+    // private String mensagemFormatada;
     private String valor;
     private String campo;
     private String mensagem;
-    private String aux;
+   // private String aux;
 
     private String getMensagem() {
         return mensagem;
@@ -45,11 +46,12 @@ public class DataBaseException extends SQLException {
      *
      * @param exception contendo o erro do banco
      */
+    
     public DataBaseException(SQLException exception) {
         List<String> valoresRecebidos = new ArrayList<>();
 
         String s = exception.getMessage();
-        System.out.println(" no dataBaseException exception.getMessage "+s);
+       
         Integer erro = exception.getErrorCode();
 
         
@@ -63,7 +65,7 @@ public class DataBaseException extends SQLException {
         for (int i = 0; i < valoresRecebidos.size(); i += 2) {
             valor = valoresRecebidos.get(i);
             campo = valoresRecebidos.get(i + 1);
-            System.out.println("valor: "+valor+" campo: "+campo);
+          
         }
       
         try {
