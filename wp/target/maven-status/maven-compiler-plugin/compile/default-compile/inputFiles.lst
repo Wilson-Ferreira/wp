@@ -1,5 +1,6 @@
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\modelo\Funcionario.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\service\UfService.java
+C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\ContratoBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\autenticacao\CriptografarSenha.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\repositorio\MesaRepositorio.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\service\CargoService.java
@@ -9,10 +10,12 @@ C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\service\CategoriaREST.
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\modelo\Cidade.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\repositorio\CidadeRepositorio.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\service\CardapioService.java
+C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\modelo\Contrato.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\modelo\Mesa.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\service\QuantidadeService.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\service\CartaoService.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\service\ConfiguracaoREST.java
+C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\service\ContratoService.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\service\UsuarioREST.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\modelo\Autorizacao.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\exception\UltimaExcepion.java
@@ -48,6 +51,7 @@ C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\converter\Da
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\modelo\UsuarioAutorizacao.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\UsuarioBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\util\ControleContrato.java
+C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\repositorio\ContratoRepositorio.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\converter\QuantidadeConverter.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\enumeracao\QuantidadeUm.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\repositorio\CargoRepositorio.java
@@ -78,7 +82,6 @@ C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\util\JsfUtil
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\enumeracao\StatusCartao.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\enumeracao\TipoCargo.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\modelo\Cardapio.java
-C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\exception\NoContentException.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\PedidoBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\NovoPedidoMesaBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\validador\ValidaValor.java

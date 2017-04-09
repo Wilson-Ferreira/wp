@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -82,12 +81,6 @@ public class Configuracao implements Serializable {
     @Column(name = "porcentagemServico", length = 3)
     private Integer porcentagemServico;
 
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private java.util.Date dataContrato;
-    
-    @Column(name = "tempoContrato", length = 4)
-    private Integer tempoContrato;
- 
     public Long getId() {
         return id;
     }
@@ -228,21 +221,5 @@ public class Configuracao implements Serializable {
 
     public void setUrl_foto_empresa(String url_foto_empresa) {
         this.url_foto_empresa = url_foto_empresa;
-    }
-
-    public java.util.Date getDataContrato() {
-        return dataContrato;
-    }
-
-    public void setDataContrato(java.util.Date dataContrato) {
-        this.dataContrato = dataContrato;
-    }
-
-    public Integer getTempoContrato() {
-        return tempoContrato;
-    }
-
-    public void setTempoContrato(Integer tempoContrato) {
-        this.tempoContrato = tempoContrato;
     }
 }
