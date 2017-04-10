@@ -33,8 +33,7 @@ public class LoginBean implements Serializable {
     private String password;
     @Inject
     private Usuario usuarioLogado;
-    @Inject
-    private JsfUtil jsfUtil;
+   
     @Inject
     private ContratoService contratoService;
    
@@ -48,9 +47,7 @@ public class LoginBean implements Serializable {
     public String autenticarUsuario() throws ServletException, IOException {
        
         if (contratoService.vericaVencimentoContrato()) {
-            
-           // jsfUtil.addMensagemInfo("Seu contrato expirou em "+data.getTime());
-           // jsfUtil.adicionarMensagemNoScopedFlash();
+          
             return "controle_contrato";
             
         } else {

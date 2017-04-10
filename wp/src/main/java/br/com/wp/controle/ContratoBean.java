@@ -38,12 +38,13 @@ public class ContratoBean implements Serializable {
 
         try {
 
-            Contrato contratoNovo = contratoService.buscarDadosContrato();
+            /*Contrato contratoNovo = contratoService.buscarDadosContrato();
            
             contratoNovo.setChave_data(contrato.getChave_data());
             contratoNovo.setChave_tempo(contrato.getChave_tempo());
-
-            contratoService.validarSistema(contratoNovo);
+              */
+            contratoService.validarSistema(contrato);
+            
             contrato = new Contrato();
 
             return "login";
