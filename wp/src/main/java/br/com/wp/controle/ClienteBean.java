@@ -20,8 +20,6 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -51,7 +49,6 @@ public class ClienteBean implements Serializable {
     private List<Cliente> listaClientesSelecionados;
     private String tipoDeCobranca;
 
-    private String cartaoCliente;
     private LazyDataModel<Cliente> modelClientes;
 
     public ClienteBean() {
@@ -159,7 +156,6 @@ public class ClienteBean implements Serializable {
     public void instanciarCliente() {
 
         cliente = new Cliente();
-        setCartaoCliente(null);
         listaClientesSelecionados = null;
     }
 
@@ -180,7 +176,7 @@ public class ClienteBean implements Serializable {
     public void preparaAlterarCliente() {
 
         buscarCartoesLivres();
-        setCartaoCliente(cliente.getCartao().getNumeroCartao());
+        listaCartoesLiberados.add(cliente.getCartao());
         jsfUtil.alterar();
 
     }
@@ -350,19 +346,6 @@ public class ClienteBean implements Serializable {
     public void setListaClientesSelecionados(List<Cliente> listaClientesSelecionados) {
         this.listaClientesSelecionados = listaClientesSelecionados;
     }
-
-    public String getCartaoCliente() {
-        return cartaoCliente;
-    }
-
-    public void setCartaoCliente(String cartaoCliente) {
-        this.cartaoCliente = cartaoCliente;
-    }
-    /*
-     public FiltroCliente getFiltroCliente() {
-     return filtroCliente;
-     }
-     */
 
     public LazyDataModel<Cliente> getModelClientes() {
         return modelClientes;

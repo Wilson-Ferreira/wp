@@ -132,7 +132,7 @@
                                                  panelStyle="width:150px" converter="converterCartao"
                                                  effect="fade" var="c" style="width:130px" filter="true" 
                                                  filterMatchMode="startsWith" rendered="#{jsfUtil.campoCartao}" >
-                                    <f:selectItem itemLabel="#{clienteBean.cartaoCliente}" itemValue=""/>
+                                    <f:selectItem itemLabel="#{c.numeroCartao}" itemValue=""/>
                                     <f:selectItems value="#{clienteBean.listaCartoesLiberados}" var="cartao" 
                                                    itemLabel="#{cartao.numeroCartao}" itemValue="#{cartao}"/>
 

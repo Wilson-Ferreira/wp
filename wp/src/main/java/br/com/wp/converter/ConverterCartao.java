@@ -6,9 +6,7 @@
 package br.com.wp.converter;
 
 import br.com.wp.modelo.Cartao;
-import br.com.wp.modelo.Quantidade;
 import br.com.wp.service.CartaoService;
-import br.com.wp.service.QuantidadeService;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
