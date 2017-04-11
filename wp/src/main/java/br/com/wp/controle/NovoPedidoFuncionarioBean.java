@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Wilson F Florindo
  */
-
 @Named
 @ConversationScoped
 public class NovoPedidoFuncionarioBean implements Serializable {
@@ -37,33 +36,37 @@ public class NovoPedidoFuncionarioBean implements Serializable {
     private Funcionario funcionario;
     @Inject
     private JsfUtil jsfUtil;
-  
+
     private List<Funcionario> listaFuncionarios;
-  
+
     public String buscarTodosFuncionariosGarcons() {
 
         String aux = "";
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
-       
+
         for (UsuarioAutorizacao ua : usuarioLogado.getUsuarioAutorizacao()) {
-         
+
             if (ua.getId().getAutorizacao().getNomeFantazia().equals("SALVAR PEDIDOS")) {
-             
-                aux="1";
+
+                aux = "1";
             }
         }
-        
-         if(aux.equals("1")){
-           
-                try {
-                    
-                    listaFuncionarios = funcionarioService.buscarFuncionarioPorCargo(TipoCargo.GARÇÕN.toString());
-                    
-                } catch (Exception ex) {
-                    
-                   UltimaExcepion ultimaException = new UltimaExcepion();
+
+        if (aux.equals("1")) {
+
+            try {
+
+                listaFuncionarios = funcionarioService.buscarFuncionarioPorCargo(TipoCargo.GARÇON.toString());
+                for (Funcionario f : listaFuncionarios) {
+
+                    System.out.println("cargo " + f.getCargo().getCargo());
+                }
+
+            } catch (Exception ex) {
+
+                UltimaExcepion ultimaException = new UltimaExcepion();
                 Throwable th = ultimaException.encontrarUltimaException(ex);
 
                 if (th instanceof SQLException) {
@@ -74,13 +77,13 @@ public class NovoPedidoFuncionarioBean implements Serializable {
 
                     jsfUtil.addMensagemErro("Ocorreu um erro no banco de dados, informe o administrador!");
                 }
-                } 
-                
-                return "novo_pedido_funcionario";
-                
-            }else{
-             
-              return "/pagina_negada.xhtml";
+            }
+
+            return "novo_pedido_funcionario";
+
+        } else {
+
+            return "/pagina_negada.xhtml";
         }
     }
 

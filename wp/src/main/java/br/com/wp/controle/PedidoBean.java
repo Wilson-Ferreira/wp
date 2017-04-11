@@ -191,7 +191,7 @@ public class PedidoBean implements Serializable {
             }
             
             listaMesas = mesaService.buscarTodasMesas();
-            listaFuncionarios = funcionarioService.buscarFuncionarioPorCargo(TipoCargo.GARÇÕN.toString());
+            listaFuncionarios = funcionarioService.buscarFuncionarioPorCargo(TipoCargo.GARÇON.toString());
             listaCategorias = categoriaService.buscarCategorias(NomeCategoria.TODAS);
             listaQuantidade = quantidadeService.buscarQuantidade();
 

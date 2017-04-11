@@ -54,7 +54,7 @@ public class FuncionarioRepositorio implements Serializable {
     }
 
     public List<Funcionario> buscarFuncionarioPorCargo(String cargo_garcon)throws Exception {
-       
+       System.out.println("cargo repo "+cargo_garcon);
         return em.createQuery("Select f From Funcionario f where f.cargo.cargo= :cargo_garcon and f.id = ANY(Select u.funcionario.id from Usuario u)")
                 .setParameter("cargo_garcon", cargo_garcon).getResultList();
     }

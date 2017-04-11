@@ -9,9 +9,10 @@ package br.com.wp.enumeracao;
  *
  * @author Wilson F Florindo
  */
+
 public enum NumeroCartao {
    
-    ZERO("0");
+    ZERO("000");
     
     private final String numero;
    

@@ -11,5 +11,5 @@ package br.com.wp.enumeracao;
  */
 public enum TipoCargo {
     
-    GARÇÕN,
+    GARÇON,
 }
