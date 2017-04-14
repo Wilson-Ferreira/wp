@@ -6,12 +6,12 @@
 package br.com.wp.modelo;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 /**
  *
@@ -26,11 +26,14 @@ public class Contrato implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name="chave_data")
-    private String chave_data;
+    @Column(name="chave")
+    private String chave;
+  
+    @Transient
+    private String strDataVencContrato;
     
-    @Column(name="chave_tempo")
-    private String chave_tempo;
+    @Transient
+    private int intTempoContrato;
 
     public Long getId() {
         return id;
@@ -40,51 +43,29 @@ public class Contrato implements Serializable {
         this.id = id;
     }
 
-    public String getChave_data() {
-        return chave_data;
-    }
-
-    public void setChave_data(String chave_data) {
-        this.chave_data = chave_data;
-    }
-
-    public String getChave_tempo() {
-        return chave_tempo;
-    }
-
-    @Override
-    public String toString() {
-        return "Contrato{" + "id=" + id + ", chave_data=" + chave_data + ", chave_tempo=" + chave_tempo + '}';
-    }
-
     
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.id);
-        return hash;
+    public String getStrDataVencContrato() {
+        return strDataVencContrato;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Contrato other = (Contrato) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+    public void setStrDataVencContrato(String strDataVencContrato) {
+        this.strDataVencContrato = strDataVencContrato;
     }
 
-    
-    public void setChave_tempo(String chave_tempo) {
-        this.chave_tempo = chave_tempo;
+    public int getIntTempoContrato() {
+        return intTempoContrato;
     }
-    
+
+    public void setIntTempoContrato(int intTempoContrato) {
+        this.intTempoContrato = intTempoContrato;
+    }
+
+    public String getChave() {
+        return chave;
+    }
+
+    public void setChave(String chave) {
+        this.chave = chave;
+    }
   
-     
 }

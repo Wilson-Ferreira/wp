@@ -31,7 +31,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  *
  * @author Wilson F Florindo
  */
-
 public class AutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
 
     private final CriptografarSenha criptografarSenha = CDIServiceLocator.getBean(CriptografarSenha.class);
@@ -41,11 +40,13 @@ public class AutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
     private Usuario usuarioLogado;
     private String mensagem;
     private String senhaCriptografada;
+    private int intTempoContrato;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, BadCredentialsException {
         String login = request.getParameter("j_login");
         String senha = request.getParameter("j_senha");
+        intTempoContrato = Integer.parseInt(request.getParameter("t_contrato"));
 
         mensagem = "";
 
@@ -71,7 +72,7 @@ public class AutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
                 FacesContext fc = FacesContext.getCurrentInstance();
                 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
                 session.setAttribute("usuarioLogado", usuarioLogado);
-              
+
                 return new UsernamePasswordAuthenticationToken(login, senha, regras);
 
             } else {
@@ -88,6 +89,10 @@ public class AutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, Authentication authResult) throws IOException, ServletException {
 
         SecurityContextHolder.getContext().setAuthentication(authResult);
+
+        mensagem = "Contrato com a Wp-Sistemas expira em " + intTempoContrato + " dias";
+        request.getSession().setAttribute("msg", mensagem);
+
         response.sendRedirect("restrito/index.xhtml");
     }
 
@@ -97,6 +102,7 @@ public class AutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
         if (mensagem.isEmpty()) {
             mensagem = "Login e/ou senha inválidos";
         }
+
         request.getSession().setAttribute("msg", mensagem);
         response.sendRedirect("login.xhtml");
     }

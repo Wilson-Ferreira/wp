@@ -5,11 +5,9 @@
  */
 package br.com.wp.service;
 
-import javax.servlet.http.HttpServletRequest;
 import br.com.wp.jpa.Transactional;
 import br.com.wp.modelo.Contrato;
 import br.com.wp.repositorio.ContratoRepositorio;
-import br.com.wp.util.JsfUtil;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,14 +32,15 @@ public class ContratoService implements Serializable {
     }
 
     @Transactional
-    public void validarSistema(Contrato contrato) throws Exception {
+    public void validarSistema(String chave) throws Exception {
 
-        contratoRepositorio.validarSistema(contrato);
+        contratoRepositorio.validarSistema(chave);
 
     }
 
-    public boolean vericaVencimentoContrato() {
+    public Contrato vericaVencimentoContrato() {
 
+        Contrato contrato = new Contrato();
         try {
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -50,10 +49,7 @@ public class ContratoService implements Serializable {
 
                 contratoNovo = contratoRepositorio.buscarDadosContrato();
 
-                int intTempoAux = Integer.valueOf(contratoNovo.getChave_tempo());
-                int intTempoContrato = (intTempoAux - 1555196218) / 8;
-
-                int intDataAux = Integer.parseInt(contratoNovo.getChave_data());
+                int intDataAux = Integer.parseInt(contratoNovo.getChave());
                 int intDataContrato = (intDataAux - 1555196218) / 8;
 
                 String strDataContrato = String.valueOf(intDataContrato);
@@ -63,7 +59,7 @@ public class ContratoService implements Serializable {
                 if (qtdeCaracteres < 8) {
 
                     strDataContrato = "0" + strDataContrato;
-                    //System.out.println("entrou "+strDataContrato);
+                   
                 }
 
                 char aux[] = strDataContrato.toCharArray();
@@ -77,11 +73,11 @@ public class ContratoService implements Serializable {
 
                 long diferenca = (dateContrato.getTime() - dataAtual.getTime()) / (1000 * 60 * 60 * 24);
 
-                 System.out.println("diferenaça "+diferenca+" tempo "+intTempoContrato);
-                if (diferenca >= intTempoContrato) {
-
-                    return true;
-                }
+                 System.out.println("diferença "+diferenca);
+                 
+                 contrato.setStrDataVencContrato(data);
+                 contrato.setIntTempoContrato((int) diferenca);
+              
                
             } catch (java.text.ParseException e) {
 
@@ -92,6 +88,6 @@ public class ContratoService implements Serializable {
             Logger.getLogger(ContratoService.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return false;
+        return contrato;
     }
 }

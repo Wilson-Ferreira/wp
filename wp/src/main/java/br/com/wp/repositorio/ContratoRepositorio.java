@@ -9,6 +9,7 @@ import br.com.wp.modelo.Contrato;
 import java.io.Serializable;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  *
@@ -21,18 +22,22 @@ public class ContratoRepositorio implements Serializable {
 
     public Contrato buscarDadosContrato() throws Exception {
 
-        return (Contrato) em.createQuery("Select c from Contrato c").getSingleResult();
+        Long cont = (Long) em.createQuery("Select count(c) from Contrato c").getSingleResult();
+       
+        if (cont > 0) {
+            return (Contrato) em.createQuery("Select c from Contrato c").getSingleResult();
+        } else {
+            return null;
+        }
     }
 
-    public void validarSistema(Contrato contratoNovo) throws Exception {
+    public void validarSistema(String chave) throws Exception {
 
-        if (contratoNovo.getId() != null) {
+        String query = "Update Contrato c set c.chave= :chave";
+        Query sQuery = em.createQuery(query);
 
-            em.merge(contratoNovo);
+        sQuery.setParameter("chave", chave);
 
-        } else {
-
-            em.persist(contratoNovo);
-        }
+        sQuery.executeUpdate();
     }
 }

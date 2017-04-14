@@ -11,6 +11,7 @@ import br.com.wp.service.ContratoService;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -38,15 +39,10 @@ public class ContratoBean implements Serializable {
 
         try {
 
-            /*Contrato contratoNovo = contratoService.buscarDadosContrato();
-           
-            contratoNovo.setChave_data(contrato.getChave_data());
-            contratoNovo.setChave_tempo(contrato.getChave_tempo());
-              */
-            contratoService.validarSistema(contrato);
-            
-            contrato = new Contrato();
+            contratoService.validarSistema(contrato.getChave());
 
+            contrato = new Contrato();
+            
             return "login";
 
         } catch (Exception ex) {

@@ -5,6 +5,7 @@
  */
 package br.com.wp.controle;
 
+import br.com.wp.modelo.Contrato;
 import br.com.wp.modelo.Usuario;
 import br.com.wp.service.ContratoService;
 import br.com.wp.util.JsfUtil;
@@ -19,7 +20,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -28,63 +29,78 @@ import javax.servlet.http.HttpServletRequest;
 @Named
 @ViewScoped
 public class LoginBean implements Serializable {
-    
+
     private String username;
     private String password;
     @Inject
     private Usuario usuarioLogado;
-   
     @Inject
     private ContratoService contratoService;
-   
+    @Inject
+    private JsfUtil jsfUtil;
+    @Inject
+    private Contrato contrato;
+
     public void buscarUsuarioNaSessao() {
-        
-        FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
-    }
-    
-    public String autenticarUsuario() throws ServletException, IOException {
+
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
        
-        if (contratoService.vericaVencimentoContrato()) {
-          
+    }
+
+    public String autenticarUsuario() throws ServletException, IOException {
+
+        contrato = contratoService.vericaVencimentoContrato();
+
+        if (contrato.getIntTempoContrato() <= 0) {
+            
+            jsfUtil.addMensagemInfo("Contrato com a Wp-Sistemas expirou em "+contrato.getStrDataVencContrato());
             return "controle_contrato";
-            
+
         } else {
-            
+
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             RequestDispatcher dispatcher = ((ServletRequest) context.getRequest())
-                    .getRequestDispatcher("/j_spring_security_check?j_login=" + getUsername() + "&j_senha=" + getPassword());
+                    .getRequestDispatcher("/j_spring_security_check?j_login=" + getUsername() + "&j_senha=" + getPassword()+"&t_contrato="+contrato.getIntTempoContrato());
             dispatcher.forward((ServletRequest) context.getRequest(), (ServletResponse) context.getResponse());
             FacesContext.getCurrentInstance().responseComplete();
-            
+
             return null;
-            
+
         }
     }
-    
+
     public String getUsername() {
         return username;
     }
-    
+
     public void setUsername(String username) {
         this.username = username;
     }
-    
+
     public String getPassword() {
         return password;
     }
-    
+
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     public Usuario getUsuarioLogado() {
         return usuarioLogado;
     }
-    
+
     public void setUsuarioLogado(Usuario usuarioLogado) {
         this.usuarioLogado = usuarioLogado;
     }
-    
+
+    public Contrato getContrato() {
+        return contrato;
+    }
+
+    public void setContrato(Contrato contrato) {
+        this.contrato = contrato;
+    }
+
 }

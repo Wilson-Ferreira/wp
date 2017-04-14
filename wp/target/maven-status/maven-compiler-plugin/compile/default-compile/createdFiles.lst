@@ -95,7 +95,6 @@ br\com\wp\enumeracao\QuantidadeUm.class
 br\com\wp\util\GerarTabelas.class
 service\CategoriaREST.class
 br\com\wp\service\ContratoService.class
-br\com\wp\util\ControleContrato.class
 br\com\wp\converter\ConverterFuncionario.class
 br\com\wp\modelo\Pedido.class
 br\com\wp\repositorio\ContratoRepositorio.class
