@@ -7,6 +7,7 @@ package br.com.wp.autenticacao;
 
 import br.com.wp.enumeracao.StatusLogin;
 import br.com.wp.modelo.Usuario;
+import br.com.wp.modelo.UsuarioAutorizacao;
 import br.com.wp.service.UsuarioService;
 import br.com.wp.util.CDIServiceLocator;
 import java.io.IOException;
@@ -40,13 +41,14 @@ public class AutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
     private Usuario usuarioLogado;
     private String mensagem;
     private String senhaCriptografada;
-    private int intTempoContrato;
+    private String strDataContrato;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, BadCredentialsException {
         String login = request.getParameter("j_login");
         String senha = request.getParameter("j_senha");
-        intTempoContrato = Integer.parseInt(request.getParameter("t_contrato"));
+        strDataContrato = request.getParameter("d_data");
+        System.out.println("data "+strDataContrato);
 
         mensagem = "";
 
@@ -56,6 +58,9 @@ public class AutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
 
             usuarioLogado = usuarioService.autenticarUsuario(login, senhaCriptografada);
 
+            for(UsuarioAutorizacao u : usuarioLogado.getUsuarioAutorizacao()){
+                System.out.println("aut "+u.getId().getAutorizacao().getTipo());
+            }
             if (usuarioLogado.getStatusLogin().toString().equalsIgnoreCase(StatusLogin.INATIVO.toString())) {
 
                 mensagem = "Seu login esta desabilitado";
@@ -88,10 +93,10 @@ public class AutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, Authentication authResult) throws IOException, ServletException {
 
-        SecurityContextHolder.getContext().setAuthentication(authResult);
-
-        mensagem = "Contrato com a Wp-Sistemas expira em " + intTempoContrato + " dias";
+        mensagem = "Contrato expira em " + strDataContrato;
         request.getSession().setAttribute("msg", mensagem);
+        
+        SecurityContextHolder.getContext().setAuthentication(authResult);
 
         response.sendRedirect("restrito/index.xhtml");
     }

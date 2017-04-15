@@ -53,6 +53,7 @@ public class LoginBean implements Serializable {
 
         contrato = contratoService.vericaVencimentoContrato();
 
+        System.out.println("dataLogin "+contrato.getStrDataVencContrato());
         if (contrato.getIntTempoContrato() <= 0) {
             
             jsfUtil.addMensagemInfo("Contrato com a Wp-Sistemas expirou em "+contrato.getStrDataVencContrato());
@@ -62,7 +63,7 @@ public class LoginBean implements Serializable {
 
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             RequestDispatcher dispatcher = ((ServletRequest) context.getRequest())
-                    .getRequestDispatcher("/j_spring_security_check?j_login=" + getUsername() + "&j_senha=" + getPassword()+"&t_contrato="+contrato.getIntTempoContrato());
+                    .getRequestDispatcher("/j_spring_security_check?j_login=" + getUsername() + "&j_senha=" + getPassword()+"&d_data=" + contrato.getStrDataVencContrato());
             dispatcher.forward((ServletRequest) context.getRequest(), (ServletResponse) context.getResponse());
             FacesContext.getCurrentInstance().responseComplete();
 
