@@ -47,7 +47,7 @@ public class AutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, BadCredentialsException {
         String login = request.getParameter("j_login");
         String senha = request.getParameter("j_senha");
-        strDataContrato = request.getParameter("d_data");
+        strDataContrato = request.getParameter("j_data");
         System.out.println("data "+strDataContrato);
 
         mensagem = "";

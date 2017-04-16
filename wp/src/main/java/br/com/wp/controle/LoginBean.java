@@ -63,7 +63,7 @@ public class LoginBean implements Serializable {
 
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             RequestDispatcher dispatcher = ((ServletRequest) context.getRequest())
-                    .getRequestDispatcher("/j_spring_security_check?j_login=" + getUsername() + "&j_senha=" + getPassword()+"&d_data=" + contrato.getStrDataVencContrato());
+                    .getRequestDispatcher("/j_spring_security_check?j_login=" + getUsername() + "&j_senha=" + getPassword()+"&j_data=" + contrato.getStrDataVencContrato());
             dispatcher.forward((ServletRequest) context.getRequest(), (ServletResponse) context.getResponse());
             FacesContext.getCurrentInstance().responseComplete();
 
