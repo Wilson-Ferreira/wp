@@ -11,7 +11,7 @@ package br.com.wp.enumeracao;
  */
 public enum NomeSecao {
     
-    BAR,
-    COSINHA,
-    CAIXA;
+    bar,
+    cosinha,
+    caixa;
 }

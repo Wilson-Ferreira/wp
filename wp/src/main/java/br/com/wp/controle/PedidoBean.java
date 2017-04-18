@@ -28,6 +28,7 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.context.FacesContext;
@@ -118,8 +119,8 @@ public class PedidoBean implements Serializable {
     public void inicializar(ActionEvent event) {
 
         FacesContext context = FacesContext.getCurrentInstance();
-        String aux = context.getExternalContext().getRequestParameterMap().get("secao");
-        secao = aux.toUpperCase();
+        secao = context.getExternalContext().getRequestParameterMap().get("secao");
+       
         buscarTodosPedidos();
     }
 
@@ -155,16 +156,16 @@ public class PedidoBean implements Serializable {
 
             listaPedidos = new ArrayList<>();
 
-            if (secao == null || secao.equals(NomeSecao.CAIXA.toString())) {
+            if (secao == null || secao.equals(NomeSecao.caixa.toString())) {
 
-                setSecao(NomeSecao.CAIXA.toString());
+                setSecao(NomeSecao.caixa.toString());
                 listaPedidos = pedidoService.buscarPedidosNaoPagos(StatusPedido.PAGO);
 
             } else {
 
                 listaPedidos = pedidoService.buscarPedidosNaoPagosPorSecao(StatusPedido.PAGO, StatusPedido.ABERTO, secao);
             }
-
+            
         } catch (Exception ex) {
 
             UltimaExcepion ultimaException = new UltimaExcepion();
