@@ -32,7 +32,7 @@
 
                             <p:commandButton value="Adicionar" icon="ui-icon-disk" process="@this" immediate="true" 
                                              update=":panelConteudo" rendered="#{configuracaoBean.configuracao == null}"
-                                             resetValues="true" disabled="#{configuracaoBean.configuracao.id == null}"
+                                             resetValues="true"
                                              action="#{configuracaoBean.preparaSalvarConfiguracoes}"/>
                            
                             <p:commandButton value="Alterar" icon="ui-icon-pencil" process="@this" immediate="true"

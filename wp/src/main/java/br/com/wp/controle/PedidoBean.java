@@ -118,8 +118,8 @@ public class PedidoBean implements Serializable {
     public void inicializar(ActionEvent event) {
 
         FacesContext context = FacesContext.getCurrentInstance();
-        secao = context.getExternalContext().getRequestParameterMap().get("secao");
-
+        String aux = context.getExternalContext().getRequestParameterMap().get("secao");
+        secao = aux.toUpperCase();
         buscarTodosPedidos();
     }
 
@@ -155,9 +155,9 @@ public class PedidoBean implements Serializable {
 
             listaPedidos = new ArrayList<>();
 
-            if (secao == null || secao.equals(NomeSecao.caixa.toString())) {
+            if (secao == null || secao.equals(NomeSecao.CAIXA.toString())) {
 
-                setSecao(NomeSecao.caixa.toString());
+                setSecao(NomeSecao.CAIXA.toString());
                 listaPedidos = pedidoService.buscarPedidosNaoPagos(StatusPedido.PAGO);
 
             } else {

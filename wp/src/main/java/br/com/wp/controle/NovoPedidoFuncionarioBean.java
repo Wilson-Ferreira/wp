@@ -48,7 +48,7 @@ public class NovoPedidoFuncionarioBean implements Serializable {
 
         for (UsuarioAutorizacao ua : usuarioLogado.getUsuarioAutorizacao()) {
 
-            if (ua.getId().getAutorizacao().getNomeFantazia().equals("SALVAR PEDIDOS")) {
+            if (ua.getId().getAutorizacao().getNomeFantazia().equals("ADICIONAR PEDIDOS")) {
 
                 aux = "1";
             }
