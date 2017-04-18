@@ -42,13 +42,16 @@ public class AutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
     private String mensagem;
     private String senhaCriptografada;
     private String strDataContrato;
+    private int tempoContrato;
+    Collection<GrantedAuthority> regras;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, BadCredentialsException {
         String login = request.getParameter("j_login");
         String senha = request.getParameter("j_senha");
         strDataContrato = request.getParameter("j_data");
-        System.out.println("data "+strDataContrato);
+        tempoContrato = Integer.parseInt(request.getParameter("j_tempoContrato"));
+        System.out.println("data " + strDataContrato + " tempo " + tempoContrato);
 
         mensagem = "";
 
@@ -58,9 +61,6 @@ public class AutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
 
             usuarioLogado = usuarioService.autenticarUsuario(login, senhaCriptografada);
 
-            for(UsuarioAutorizacao u : usuarioLogado.getUsuarioAutorizacao()){
-                System.out.println("aut "+u.getId().getAutorizacao().getTipo());
-            }
             if (usuarioLogado.getStatusLogin().toString().equalsIgnoreCase(StatusLogin.INATIVO.toString())) {
 
                 mensagem = "Seu login esta desabilitado";
@@ -69,10 +69,13 @@ public class AutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
 
             if (usuarioLogado != null) {
 
-                Collection<GrantedAuthority> regras = new ArrayList<>();
-                usuarioLogado.getUsuarioAutorizacao().stream().forEach((ua) -> {
-                    regras.add(new SimpleGrantedAuthority(ua.getId().getAutorizacao().getTipo()));
-                });
+                if (tempoContrato > 0) {
+
+                    regras = new ArrayList<>();
+                    usuarioLogado.getUsuarioAutorizacao().stream().forEach((ua) -> {
+                        regras.add(new SimpleGrantedAuthority(ua.getId().getAutorizacao().getTipo()));
+                    });
+                }
 
                 FacesContext fc = FacesContext.getCurrentInstance();
                 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -95,10 +98,17 @@ public class AutenticacaoFilter extends UsernamePasswordAuthenticationFilter {
 
         mensagem = "Contrato expira em " + strDataContrato;
         request.getSession().setAttribute("msg", mensagem);
-        
+
         SecurityContextHolder.getContext().setAuthentication(authResult);
 
-        response.sendRedirect("restrito/index.xhtml");
+        if (tempoContrato <= 0) {
+
+            response.sendRedirect("controle_contrato.xhtml");
+
+        } else {
+
+            response.sendRedirect("restrito/index.xhtml");
+        }
     }
 
     @Override
