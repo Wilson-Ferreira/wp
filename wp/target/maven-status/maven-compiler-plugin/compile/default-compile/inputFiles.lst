@@ -3,6 +3,7 @@ C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\service\UfSe
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\ContratoBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\autenticacao\CriptografarSenha.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\repositorio\MesaRepositorio.java
+C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\cliente\controle\SalvarClienteBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\service\CargoService.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\org\netbeans\rest\application\config\ApplicationConfig.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\modelo\Cargo.java
@@ -25,11 +26,13 @@ C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\Nov
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\repositorio\CategoriaRepositorio.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\modelo\Categoria.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\converter\ConverterItemCardapio.java
+C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\cliente\controle\ZerarCartaoClienteBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\modelo\Quantidade.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\autenticacao\AutenticacaoFilter.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\service\ClienteService.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\converter\CargoConverter.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\modelo\Uf.java
+C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\cliente\controle\ListarClienteBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\enumeracao\TipoCobranca.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\FuncionarioBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\repositorio\CardapioRepositorio.java
@@ -62,12 +65,13 @@ C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\repositorio\
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\repositorio\AutorizacaoRepositorio.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\repositorio\PedidoRepositorio.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\util\CDIServiceLocator.java
-C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\ClienteBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\validador\ValidaCnpj.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\ConfiguracaoBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\converter\ConverterFuncionario.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\repositorio\UsuarioAutorizacaoRepositorio.java
+C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\cliente\controle\AlterarClienteBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\service\CartaoREST.java
+C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\cliente\controle\AlterarStatusCartaoClienteBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\repositorio\ClienteRepositorio.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\service\UsuarioService.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\converter\ConverterCartao.java
@@ -81,6 +85,7 @@ C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\util\JsfUtil
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\enumeracao\StatusCartao.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\enumeracao\TipoCargo.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\modelo\Cardapio.java
+C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\cliente\controle\ExcluirClienteBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\PedidoBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\NovoPedidoMesaBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\validador\ValidaValor.java

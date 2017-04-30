@@ -46,14 +46,14 @@ public class ContratoBean implements Serializable {
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         usuario = (Usuario) session.getAttribute("usuarioLogado");
         
-        for(UsuarioAutorizacao aut : usuario.getUsuarioAutorizacao()){
+/*        for(UsuarioAutorizacao aut : usuario.getUsuarioAutorizacao()){
             if(aut.getId().getAutorizacao().getTipo().equalsIgnoreCase("ROLE_ADMIN")){
-               
+            */   
                 return true;
-              
+              /*
             }
         }
-        return false;
+        return false;*/
     }
     
     public String validarSistema() {

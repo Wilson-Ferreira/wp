@@ -8,16 +8,15 @@ br\com\wp\jpa\Transactional.class
 service\MesaREST.class
 br\com\wp\modelo\Quantidade.class
 br\com\wp\jpa\EntityManagerProducer.class
-br\com\wp\controle\ClienteBean.class
 br\com\wp\util\JsfUtil.class
 service\ConfiguracaoREST.class
 br\com\wp\controle\CardapioBean.class
 br\com\wp\listener\AutenticacaoPhaseListener.class
 service\PedidoREST$1.class
 br\com\wp\controle\NovoPedidoBean.class
+br\com\wp\cliente\controle\ListarClienteBean$1.class
 br\com\wp\modelo\Autorizacao.class
 br\com\wp\repositorio\CargoRepositorio.class
-br\com\wp\controle\ClienteBean$1.class
 br\com\wp\controle\NovoPedidoFuncionarioBean.class
 br\com\wp\repositorio\CartaoRepositorio.class
 br\com\wp\validador\ValidaCnpj.class
@@ -26,10 +25,12 @@ br\com\wp\service\CartaoService.class
 br\com\wp\controle\FuncionarioBean.class
 br\com\wp\modelo\Funcionario.class
 br\com\wp\converter\ConverterAutorizacao.class
+br\com\wp\cliente\controle\AlterarClienteBean.class
 br\com\wp\exception\DataBaseException.class
 br\com\wp\converter\QuantidadeConverter.class
 br\com\wp\modelo\Categoria.class
 br\com\wp\service\CategoriaService.class
+br\com\wp\cliente\controle\SalvarClienteBean.class
 br\com\wp\jpa\TransacionalInterceptor.class
 br\com\wp\enumeracao\NomeSecao.class
 br\com\wp\modelo\Cargo.class
@@ -39,6 +40,7 @@ br\com\wp\controle\UsuarioBean.class
 br\com\wp\controle\PedidoBean.class
 br\com\wp\enumeracao\TipoCobranca.class
 br\com\wp\autenticacao\AutenticacaoFilter.class
+br\com\wp\cliente\controle\AlterarStatusCartaoClienteBean.class
 br\com\wp\enumeracao\TipoCargo.class
 br\com\wp\validador\ValidaValor.class
 br\com\wp\repositorio\AutorizacaoRepositorio.class
@@ -51,6 +53,7 @@ br\com\wp\modelo\Usuario.class
 br\com\wp\enumeracao\NomeCategoria.class
 br\com\wp\converter\ConverterMesa.class
 service\CardapioREST.class
+br\com\wp\cliente\controle\ListarClienteBean.class
 br\com\wp\service\CargoService.class
 br\com\wp\controle\CalculaContaBean.class
 br\com\wp\enumeracao\StatusLogin.class
@@ -78,6 +81,7 @@ br\com\wp\service\MesaService.class
 br\com\wp\controle\ContratoBean.class
 service\PedidoREST.class
 br\com\wp\repositorio\CidadeRepositorio.class
+br\com\wp\cliente\controle\ExcluirClienteBean.class
 br\com\wp\exception\UltimaExcepion.class
 br\com\wp\modelo\Cartao.class
 br\com\wp\repositorio\MesaRepositorio.class
@@ -97,6 +101,7 @@ service\CategoriaREST.class
 br\com\wp\service\ContratoService.class
 br\com\wp\converter\ConverterFuncionario.class
 br\com\wp\modelo\Pedido.class
+br\com\wp\cliente\controle\ZerarCartaoClienteBean.class
 br\com\wp\repositorio\ContratoRepositorio.class
 br\com\wp\controle\LoginBean.class
 br\com\wp\service\PedidoService.class

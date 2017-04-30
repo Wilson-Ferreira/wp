@@ -5,6 +5,7 @@
  */
 package br.com.wp.controle;
 
+import br.com.wp.cliente.controle.ListarClienteBean;
 import br.com.wp.enumeracao.TipoCobranca;
 import br.com.wp.exception.DataBaseException;
 import br.com.wp.exception.UltimaExcepion;
@@ -56,7 +57,7 @@ public class NovoPedidoMesaBean implements Serializable {
 
         } catch (Exception ex) {
 
-            Logger.getLogger(ClienteBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ListarClienteBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

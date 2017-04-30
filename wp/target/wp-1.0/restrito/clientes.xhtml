@@ -11,7 +11,7 @@
         <f:view>  
 
               <f:metadata>
-                  <f:viewAction action="#{clienteBean.buscarTipoDeCobranca()}"/>
+                  <f:viewAction action="#{listarClienteBean.buscarTipoDeCobranca()}"/>
             </f:metadata>
             
             <p:outputPanel id="panelConteudo">
@@ -31,31 +31,31 @@
                         <p:toolbarGroup align="left">
 
                             <p:commandButton value="Novo" icon="ui-icon-disk" process="@this" immediate="true"
-                                             action="#{clienteBean.preparaSalvarCliente}"
+                                             action="#{salvarClienteBean.preparaSalvarCliente}"
                                              rendered="#{request.isUserInRole('ROLE_ADICIONAR_CLIENTE')}"
                                              update=":panelConteudo" resetValues="true"/>
                           
                             <p:commandButton value="Alterar" icon="ui-icon-pencil" process="@this" immediate="true"
                                              rendered="#{request.isUserInRole('ROLE_ALTERAR_CLIENTE')}"
-                                             disabled="#{clienteBean.cliente.id == null}"
-                                             actionListener="#{clienteBean.preparaAlterarCliente()}"
+                                             disabled="#{listarClienteBean.cliente.id == null}"
+                                             actionListener="#{alterarClienteBean.preparaAlterarCliente()}"
                                              update=":panelConteudo" resetValues="true"/>
                             
                              <p:commandButton value="Excluir" icon="ui-icon-trash" process="@this" immediate="true"
                                              rendered="#{request.isUserInRole('ROLE_EXCLUIR_CLIENTE')}"
-                                             disabled="#{clienteBean.cliente.id == null}"
-                                             actionListener="#{clienteBean.preparaExcluirCliente}" 
+                                             disabled="#{listarClienteBean.cliente.id == null}"
+                                             actionListener="#{excluirClienteBean.preparaExcluirCliente}" 
                                              update=":formDialogExcluir" resetValues="true"/>
                             
                              <p:commandButton icon="ui-icon-pencil" value="Alterar status cartão" process="@this" immediate="true"
                                              rendered="#{request.isUserInRole('ROLE_LIBERAR_CARTOES') and jsfUtil.campoCartao}"
-                                             disabled="#{clienteBean.cliente.id == null}" 
-                                             actionListener="#{clienteBean.alterarStatusCartao()}" 
+                                             disabled="#{listarClienteBean.cliente.id == null}" 
+                                             actionListener="#{alterarStatusCartaoClienteBean.alterarStatusCartao()}" 
                                              update=":panelConteudo" resetValues="true"/>
                            
                             <p:commandButton icon="ui-icon-pencil" value="Zerar cartões" process="@this" immediate="true"
                                              rendered="#{request.isUserInRole('ROLE_ZERAR_CARTOES') and jsfUtil.campoCartao}"                                            
-                                             actionListener="#{clienteBean.zerarCartoes()}" 
+                                             actionListener="#{zerarCartaoClienteBean.zerarCartoes()}" 
                                              update=":panelConteudo" resetValues="true"/>                                                                                             
                         </p:toolbarGroup>
                     </p:toolbar>
@@ -79,7 +79,7 @@
                                 <p:outputLabel for="nome" value="Nome "/>
                             </div>
                             <div class="ui-grid-col-3">
-                                <p:inputText id="nome" value="#{clienteBean.cliente.nome}" style="width: 94%"
+                                <p:inputText id="nome" value="#{listarClienteBean.cliente.nome}" style="width: 94%"
                                              onblur="value = value.toUpperCase()"/>
                             </div>
                         </div>
@@ -92,7 +92,7 @@
 
                             <div class="ui-grid-col-5">
                                 <p:inputMask mask="(999) - 9999-9999" id="telefone" 
-                                             value="#{clienteBean.cliente.telefone}" 
+                                             value="#{listarClienteBean.cliente.telefone}" 
                                              style="width: 47%"/>
                             </div>
                         </div>
@@ -104,7 +104,7 @@
                             </div>
                             <div class="ui-grid-col-5">
                                 <p:inputMask mask="(999) - 99999-9999" id="celular" 
-                                             value="#{clienteBean.cliente.celular}" 
+                                             value="#{listarClienteBean.cliente.celular}" 
                                              style="width: 47%"/>
                             </div>
                         </div>
@@ -115,7 +115,7 @@
                                 <p:outputLabel for="cpf" value="Cpf"/>
                             </div>
                             <div class="ui-grid-col-3">
-                                <p:inputMask mask="999.999.999-99" value="#{clienteBean.cliente.cpf}"
+                                <p:inputMask mask="999.999.999-99" value="#{listarClienteBean.cliente.cpf}"
                                              validator="validaCpf"
                                              id="cpf" style="width: 43%"/>
                             </div>
@@ -128,12 +128,12 @@
 
                             </div>
                             <div class="ui-grid-col-3">
-                                <p:selectOneMenu id="cartao" value="#{clienteBean.cliente.cartao}"
+                                <p:selectOneMenu id="cartao" value="#{listarClienteBean.cliente.cartao}"
                                                  panelStyle="width:150px" converter="converterCartao"
                                                  effect="fade" var="c" style="width:130px" filter="true" 
                                                  filterMatchMode="startsWith" rendered="#{jsfUtil.campoCartao}" >
                                     <f:selectItem itemLabel="#{c.numeroCartao}" itemValue=""/>
-                                    <f:selectItems value="#{clienteBean.listaCartoesLiberados}" var="cartao" 
+                                    <f:selectItems value="#{listarClienteBean.listaCartoesLiberados}" var="cartao" 
                                                    itemLabel="#{cartao.numeroCartao}" itemValue="#{cartao}"/>
 
                                     <p:column style="width:10%">
@@ -148,12 +148,12 @@
                             <div class="ui-grid-col-2">
 
                                 <p:commandButton icon="ui-icon-disk" value="Salvar"
-                                                 actionListener="#{clienteBean.salvarAlterarCliente()}" 
+                                                 actionListener="#{salvarClienteBean.salvarCliente()}" 
                                                  update=":panelConteudo"                                            
                                                  rendered="#{jsfUtil.botaoSalvar}"/>
 
                                 <p:commandButton icon="ui-icon-pencil" value="Alterar"
-                                                 actionListener="#{clienteBean.salvarAlterarCliente()}" 
+                                                 actionListener="#{alterarClienteBean.alterarCliente()}" 
                                                  update=":panelConteudo"                                            
                                                  rendered="#{jsfUtil.botaoAlterar}"/>
 
@@ -161,7 +161,7 @@
 
                                 <p:spacer width="3px"/>
                                 <p:commandButton icon="ui-icon-cancel" process="@this" value="Cancelar" immediate="true" 
-                                                 actionListener="#{clienteBean.cancelar()}" update=":panelConteudo :formTableClientes :table"/>
+                                                 actionListener="#{listarClienteBean.cancelar()}" update=":panelConteudo :formTableClientes :table"/>
                             </div>
                         </div>
                     </div>
@@ -170,9 +170,9 @@
 
                 <h:form id="formTableClientes"  prependId="false" rendered="#{jsfUtil.dataTable}">
 
-                    <p:dataTable var="cliente" value="#{clienteBean.modelClientes}" lazy="true" 
+                    <p:dataTable var="cliente" value="#{listarClienteBean.modelClientes}" lazy="true" 
                                  paginator="true" rows="17" paginatorPosition="bottom"
-                                 emptyMessage="Não há clientes cadastrados" selection="#{clienteBean.cliente}"
+                                 emptyMessage="Não há clientes cadastrados" selection="#{listarClienteBean.cliente}"
                                  selectionMode="single" rowKey="#{cliente.id}" reflow="true" 
                                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                                  rowsPerPageTemplate="17,30,40" id="table" class="ui-datatable">
@@ -214,9 +214,9 @@
                     <p:confirmDialog  message="Deseja excluir #{cliente.nome}?" 
                                       header="Exclusão de Cliente" severity="alert"
                                       widgetVar="dialogConfirmaExclusao">
-                        <p:commandButton value="Sim" action="#{clienteBean.excluirCliente}"
+                        <p:commandButton value="Sim" action="#{excluirClienteBean.excluirCliente}"
                                          oncomplete="PF('dialogConfirmaExclusao').hide()" update=":panelConteudo :formTableClientes :table"/>
-                        <p:commandButton value="Não" action="#{clienteBean.cancelar()}"
+                        <p:commandButton value="Não" action="#{listarClienteBean.cancelar()}"
                                          oncomplete="PF('dialogConfirmaExclusao').hide()" update=":panelConteudo :formTableClientes :table"/>                      
                     </p:confirmDialog>
                 </h:form>
