@@ -28,7 +28,7 @@ import javax.inject.Named;
 public class ZerarCartaoClienteBean implements Serializable {
 
     @Inject
-    private ListarClienteBean clienteBean;
+    private ListarClienteBean listarClienteBean;
     @Inject
     private ClienteService clienteService;  
     @Inject
@@ -46,7 +46,7 @@ public class ZerarCartaoClienteBean implements Serializable {
 
             jsfUtil.addMensagemInfo("Cartões zerados com sucesso");
 
-            clienteBean.instanciarCliente();
+            listarClienteBean.instanciarCliente();
 
         } catch (Exception ex) {
 

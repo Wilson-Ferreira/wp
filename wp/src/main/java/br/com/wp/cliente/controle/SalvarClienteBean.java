@@ -14,7 +14,6 @@ import br.com.wp.modelo.Cartao;
 import br.com.wp.modelo.Cliente;
 import br.com.wp.service.CartaoService;
 import br.com.wp.service.ClienteService;
-import br.com.wp.service.ConfiguracaoService;
 import br.com.wp.util.JsfUtil;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -32,7 +31,7 @@ import javax.inject.Named;
 public class SalvarClienteBean implements Serializable {
 
     @Inject
-    private ListarClienteBean clienteBean;
+    private ListarClienteBean listarClienteBean;
     @Inject
     private ClienteService clienteService;
     @Inject
@@ -46,10 +45,10 @@ public class SalvarClienteBean implements Serializable {
 
     public void preparaSalvarCliente() {
 
-        listaCartoesLiberados = clienteBean.buscarCartoesLivres();
-        clienteBean.getListaCartoesLiberados().addAll(listaCartoesLiberados);
+        listaCartoesLiberados = listarClienteBean.buscarCartoesLivres();
+        listarClienteBean.getListaCartoesLiberados().addAll(listaCartoesLiberados);
         cliente = new Cliente();
-        clienteBean.setCliente(cliente);
+        listarClienteBean.setCliente(cliente);
         jsfUtil.salvar();
 
     }
@@ -58,7 +57,7 @@ public class SalvarClienteBean implements Serializable {
 
         try {
 
-            if (clienteBean.getTipoDeCobranca().equalsIgnoreCase(TipoCobranca.MESA.toString())) {
+            if (listarClienteBean.getTipoDeCobranca().equalsIgnoreCase(TipoCobranca.MESA.toString())) {
 
                 cliente.setStatusCartao(StatusCartao.LIBERADO.toString());
 
@@ -73,7 +72,7 @@ public class SalvarClienteBean implements Serializable {
 
             jsfUtil.addMensagemInfo("Cliente salvo com sucesso");
 
-            clienteBean.instanciarCliente();
+            listarClienteBean.instanciarCliente();
             
             jsfUtil.listar();
 

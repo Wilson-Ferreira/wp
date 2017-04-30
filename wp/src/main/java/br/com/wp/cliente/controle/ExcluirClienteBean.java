@@ -25,17 +25,14 @@ import javax.inject.Named;
 public class ExcluirClienteBean implements Serializable {
 
     @Inject
-    private ListarClienteBean clienteBean;
+    private ListarClienteBean listarClienteBean;
     @Inject
     private ClienteService clienteService;
-    @Inject
-    private Cliente cliente;
     @Inject
     private JsfUtil jsfUtil;
 
     public void preparaExcluirCliente() {
 
-        cliente = clienteBean.getCliente();
         jsfUtil.abrirFecharDialog("PF('dialogConfirmaExclusao').show();");
     }
 
@@ -43,9 +40,9 @@ public class ExcluirClienteBean implements Serializable {
 
         try {
 
-            clienteService.excluirCliente(cliente);
+            clienteService.excluirCliente(listarClienteBean.getCliente());
 
-            clienteBean.getListaClientes().remove(cliente);
+            listarClienteBean.getListaClientes().remove(listarClienteBean.getCliente());
 
             jsfUtil.addMensagemInfo("Cliente excluido com sucesso");
 
@@ -65,11 +62,4 @@ public class ExcluirClienteBean implements Serializable {
         }
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
 }

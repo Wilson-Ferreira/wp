@@ -27,11 +27,9 @@ import javax.inject.Named;
 public class AlterarStatusCartaoClienteBean implements Serializable {
 
     @Inject
-    private ListarClienteBean clienteBean;
+    private ListarClienteBean listarClienteBean;
     @Inject
     private ClienteService clienteService;
-    @Inject
-    private Cliente cliente;
     @Inject
     private JsfUtil jsfUtil;
 
@@ -39,19 +37,17 @@ public class AlterarStatusCartaoClienteBean implements Serializable {
 
         try {
 
-            cliente = clienteBean.getCliente();
+            if (listarClienteBean.getCliente().getStatusCartao().equalsIgnoreCase(StatusCartao.LIBERADO.toString())) {
 
-            if (cliente.getStatusCartao().equalsIgnoreCase(StatusCartao.LIBERADO.toString())) {
-
-                cliente.setStatusCartao(StatusCartao.RETIDO.toString());
+                listarClienteBean.getCliente().setStatusCartao(StatusCartao.RETIDO.toString());
 
             } else {
 
-                cliente.setStatusCartao(StatusCartao.LIBERADO.toString());
+                listarClienteBean.getCliente().setStatusCartao(StatusCartao.LIBERADO.toString());
             }
 
-            clienteService.salvarAlterarCliente(cliente);
-            clienteBean.instanciarCliente();
+            clienteService.salvarAlterarCliente(listarClienteBean.getCliente());
+            listarClienteBean.instanciarCliente();
 
         } catch (Exception ex) {
 
@@ -69,11 +65,4 @@ public class AlterarStatusCartaoClienteBean implements Serializable {
         }
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
 }

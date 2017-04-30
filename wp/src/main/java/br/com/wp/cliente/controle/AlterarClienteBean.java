@@ -29,11 +29,9 @@ import javax.inject.Named;
 public class AlterarClienteBean implements Serializable {
 
     @Inject
-    private ListarClienteBean clienteBean;
+    private ListarClienteBean listarClienteBean;
     @Inject
     private ClienteService clienteService;
-    @Inject
-    private Cliente cliente;
     @Inject
     private JsfUtil jsfUtil;
 
@@ -41,11 +39,11 @@ public class AlterarClienteBean implements Serializable {
 
     public void preparaAlterarCliente() throws Exception {
 
-        cliente = clienteBean.getCliente();
-        listaCartoesLiberados = clienteBean.buscarCartoesLivres();
-        listaCartoesLiberados.add(cliente.getCartao());
+     
+        listaCartoesLiberados = listarClienteBean.buscarCartoesLivres();
+        listaCartoesLiberados.add(listarClienteBean.getCliente().getCartao());
 
-        clienteBean.getListaCartoesLiberados().addAll(listaCartoesLiberados);
+        listarClienteBean.getListaCartoesLiberados().addAll(listaCartoesLiberados);
 
         jsfUtil.alterar();
 
@@ -55,11 +53,11 @@ public class AlterarClienteBean implements Serializable {
 
         try {
 
-            clienteService.salvarAlterarCliente(cliente);
+            clienteService.salvarAlterarCliente(listarClienteBean.getCliente());
 
             jsfUtil.addMensagemInfo("Cliente alterado com sucesso");
 
-            clienteBean.instanciarCliente();
+            listarClienteBean.instanciarCliente();
             
             jsfUtil.listar();
 
@@ -78,9 +76,4 @@ public class AlterarClienteBean implements Serializable {
             }
         }
     }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
 }
