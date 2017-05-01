@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
  *
  * @author Wilson F Florindo
  */
+
 public class FuncionarioRepositorio implements Serializable {
 
     @Inject
@@ -33,10 +34,10 @@ public class FuncionarioRepositorio implements Serializable {
     public void salvarAlterarFuncionario(Funcionario funcionario) throws Exception {
 
         if (funcionario.getId() == null) {
-            System.out.println("persiste");
+           
             em.persist(funcionario);
         } else {
-             System.out.println("merge");
+            
             em.merge(funcionario);
         }
     }
@@ -54,7 +55,7 @@ public class FuncionarioRepositorio implements Serializable {
     }
 
     public List<Funcionario> buscarFuncionarioPorCargo(String cargo_garcon)throws Exception {
-       System.out.println("cargo repo "+cargo_garcon);
+       
         return em.createQuery("Select f From Funcionario f where f.cargo.cargo= :cargo_garcon and f.id = ANY(Select u.funcionario.id from Usuario u)")
                 .setParameter("cargo_garcon", cargo_garcon).getResultList();
     }

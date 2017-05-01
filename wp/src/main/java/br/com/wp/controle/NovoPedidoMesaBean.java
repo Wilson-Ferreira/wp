@@ -5,7 +5,7 @@
  */
 package br.com.wp.controle;
 
-import br.com.wp.cliente.controle.ListarClienteBean;
+import br.com.wp.controle.cliente.ListarClienteBean;
 import br.com.wp.enumeracao.TipoCobranca;
 import br.com.wp.exception.DataBaseException;
 import br.com.wp.exception.UltimaExcepion;
