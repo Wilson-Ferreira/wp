@@ -14,7 +14,7 @@ import br.com.wp.service.ClienteService;
 import br.com.wp.util.JsfUtil;
 import java.io.Serializable;
 import java.sql.SQLException;
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -24,7 +24,7 @@ import javax.inject.Named;
  */
 
 @Named
-@ViewScoped
+@RequestScoped
 public class ZerarCartaoClienteBean implements Serializable {
 
     @Inject

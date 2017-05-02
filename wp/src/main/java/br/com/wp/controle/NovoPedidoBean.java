@@ -5,6 +5,7 @@
  */
 package br.com.wp.controle;
 
+import br.com.wp.controle.cardapio.ListarCardapioBean;
 import br.com.wp.enumeracao.NumeroCartao;
 import br.com.wp.enumeracao.QuantidadeUm;
 import br.com.wp.exception.DataBaseException;
@@ -45,7 +46,7 @@ import javax.servlet.http.HttpServletRequest;
 public class NovoPedidoBean implements Serializable {
 
     @Inject
-    private CardapioBean cardapioBean;
+    private ListarCardapioBean cardapioBean;
     @Inject
     private CartaoService cartaoService;
     @Inject

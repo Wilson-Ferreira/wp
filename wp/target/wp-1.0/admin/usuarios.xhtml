@@ -38,7 +38,7 @@
 
                              <p:commandButton value="Excluir" icon="ui-icon-trash" process="@this" immediate="true"
                                              disabled="#{listarUsuarioBean.usuario.id == null}"
-                                             actionListener="#{listarUsuarioBean.preparaExcluirUsuario}"
+                                             actionListener="#{excluirUsuarioBean.preparaExcluirUsuario}"
                                              update=":formDialogExcluir" resetValues="true"/>  
 
                             <p:commandButton value="Ativar/Desativar Login" icon="ui-icon-pencil" process="@this"                                          

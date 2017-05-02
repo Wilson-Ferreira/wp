@@ -28,6 +28,7 @@ import org.primefaces.model.SortOrder;
  *
  * @author Wilson F Florindo
  */
+
 @Named
 @ViewScoped
 public class ListarClienteBean implements Serializable {

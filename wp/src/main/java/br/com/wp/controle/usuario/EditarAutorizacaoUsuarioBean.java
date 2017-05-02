@@ -22,8 +22,8 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import org.primefaces.model.DualListModel;
 
@@ -31,8 +31,9 @@ import org.primefaces.model.DualListModel;
  *
  * @author Wilson F Florindo
  */
+
 @Named
-@ViewScoped
+@RequestScoped
 public class EditarAutorizacaoUsuarioBean implements Serializable {
 
     @Inject
@@ -72,7 +73,7 @@ public class EditarAutorizacaoUsuarioBean implements Serializable {
 
         listaUsuarioAutorizacao = new ArrayList<>();
 
-       // try {
+        try {
         for (Autorizacao autorizacao : listarUsuarioBean.getListaModelAutorizacoes().getTarget()) {
 
             System.out.println("aut " + autorizacao.getNomeFantazia() + " usu " + listarUsuarioBean.getUsuario().getFuncionario().getNome());
@@ -88,7 +89,7 @@ public class EditarAutorizacaoUsuarioBean implements Serializable {
 
         usuarioAutorizacaoService.salvarAlterarUsuarioAutorizacao(listaUsuarioAutorizacao, listarUsuarioBean.getUsuario());
 
-        /* } catch (Exception ex) {
+         } catch (Exception ex) {
 
          UltimaExcepion ultimaException = new UltimaExcepion();
          Throwable th = ultimaException.encontrarUltimaException(ex);
@@ -101,7 +102,8 @@ public class EditarAutorizacaoUsuarioBean implements Serializable {
 
          jsfUtil.addMensagemErro("Ocorreu um erro no banco de dados, informe o administrador!" + ex);
          }
-         }*/
+         }
+        
         jsfUtil.addMensagemInfo("Autorizações atualizadas com sucesso.");
         jsfUtil.listar();
         listarUsuarioBean.cancelar();

@@ -13,8 +13,8 @@ import br.com.wp.service.UsuarioService;
 import br.com.wp.util.JsfUtil;
 import java.io.Serializable;
 import java.sql.SQLException;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 
 /**
@@ -23,7 +23,7 @@ import javax.inject.Inject;
  */
 
 @Named
-@ViewScoped
+@RequestScoped
 public class SalvarUsuarioBean implements Serializable {
 
     @Inject

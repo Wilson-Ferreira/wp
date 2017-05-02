@@ -12,16 +12,17 @@ import br.com.wp.service.UsuarioService;
 import br.com.wp.util.JsfUtil;
 import java.io.Serializable;
 import java.sql.SQLException;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 
 /**
  *
  * @author Wilson F Florindo
  */
+
 @Named
-@ViewScoped
+@RequestScoped
 public class AlterarSenhaUsuarioBean implements Serializable {
 
     @Inject

@@ -5,6 +5,7 @@ C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\autenticacao
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\repositorio\MesaRepositorio.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\service\CargoService.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\org\netbeans\rest\application\config\ApplicationConfig.java
+C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\funcionario\AlterarFuncionarioBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\modelo\Cargo.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\service\CategoriaREST.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\modelo\Cidade.java
@@ -15,6 +16,7 @@ C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\modelo\Mesa.
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\service\QuantidadeService.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\service\CartaoService.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\usuario\ExcluirUsuarioBean.java
+C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\funcionario\ExcluirFuncionarioBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\service\ConfiguracaoREST.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\service\ContratoService.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\service\UsuarioREST.java
@@ -37,12 +39,12 @@ C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\service\Clie
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\converter\CargoConverter.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\modelo\Uf.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\enumeracao\TipoCobranca.java
-C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\FuncionarioBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\repositorio\CardapioRepositorio.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\service\CardapioREST.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\NovoPedidoBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\enumeracao\StatusPedido.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\service\ConfiguracaoService.java
+C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\cardapio\SalvarCardapioBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\enumeracao\NomeCategoria.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\modelo\Cartao.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\jpa\Transactional.java
@@ -79,15 +81,18 @@ C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\service\Usua
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\converter\ConverterCartao.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\jpa\EntityManagerProducer.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\service\MesaService.java
+C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\funcionario\SalvarFuncionarioBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\cliente\AlterarStatusCartaoClienteBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\LoginBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\jpa\TransacionalInterceptor.java
+C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\cardapio\ListarCardapioBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\repositorio\FuncionarioRepositorio.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\modelo\UsuarioAutorizacaoId.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\util\JsfUtil.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\enumeracao\StatusCartao.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\enumeracao\TipoCargo.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\modelo\Cardapio.java
+C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\funcionario\ListarFuncionarioBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\PedidoBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\NovoPedidoMesaBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\validador\ValidaValor.java
@@ -95,7 +100,6 @@ C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\Nov
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\modelo\Usuario.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\converter\ConverterCidade.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\repositorio\UfRepositorio.java
-C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\CardapioBean.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\service\PedidoREST.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\repositorio\CartaoRepositorio.java
 C:\Users\User\Documents\NetBeansProjects\wp\src\main\java\br\com\wp\controle\cliente\ExcluirClienteBean.java

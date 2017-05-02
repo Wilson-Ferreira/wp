@@ -10,9 +10,7 @@
     <ui:define name="content">
         <f:view>
             <f:metadata>
-                <f:viewAction action="#{funcionarioBean.buscarTodosFuncionarios()}"/>
-                <f:viewAction action="#{funcionarioBean.buscarTodasUfs()}"/>
-                <f:viewAction action="#{funcionarioBean.buscarTodosCargos()}"/>
+                <f:viewAction action="#{listarFuncionarioBean.buscarTodosFuncionarios()}"/>
             </f:metadata>
 
 
@@ -31,17 +29,17 @@
 
                             <p:commandButton value="Novo" icon="ui-icon-disk" process="@this" immediate="true" 
                                              update=":panelConteudo" resetValues="true"
-                                             action="#{funcionarioBean.preparaSalvarFuncionario}"/>                                        
+                                             action="#{salvarFuncionarioBean.preparaSalvarFuncionario}"/>                                        
 
 
                             <p:commandButton value="Alterar" icon="ui-icon-pencil" process="@this" immediate="true"
                                              update=":panelConteudo" resetValues="true" 
-                                             disabled="#{funcionarioBean.funcionario.id == null}"                                        
-                                             action="#{funcionarioBean.preparaAlterarFuncionario}"/>                                        
+                                             disabled="#{listarFuncionarioBean.funcionario.id == null}"                                        
+                                             action="#{alterarFuncionarioBean.preparaAlterarFuncionario}"/>                                        
 
                             <p:commandButton value="Excluir" icon="ui-icon-trash" process="@this" 
-                                             disabled="#{funcionarioBean.funcionario.id == null}"
-                                             action="#{funcionarioBean.preparaExcluirFuncionario}"
+                                             disabled="#{listarFuncionarioBean.funcionario.id == null}"
+                                             action="#{excluirFuncionarioBean.preparaExcluirFuncionario}"
                                              update=":formDialogExcluir" resetValues="true"/>                                         
 
                         </p:toolbarGroup>
@@ -49,8 +47,8 @@
                 </h:form>
 
                 <h:form id="tableFuncionario" prependId="false" rendered="#{jsfUtil.dataTable}">
-                    <p:dataTable var="funcionario" value="#{funcionarioBean.listaFuncionarios}" paginator="true" rows="17" paginatorPosition="bottom"
-                                 emptyMessage="Não há funcionários cadastrados" selection="#{funcionarioBean.funcionario}"
+                    <p:dataTable var="funcionario" value="#{listarFuncionarioBean.listaFuncionarios}" paginator="true" rows="17" paginatorPosition="bottom"
+                                 emptyMessage="Não há funcionários cadastrados" selection="#{listarFuncionarioBean.funcionario}"
                                  selectionMode="single" rowKey="#{funcionario}" reflow="true" 
                                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                                  rowsPerPageTemplate="17,30,40" id="table" class="ui-datatable">
@@ -133,14 +131,14 @@
                                 <p:outputLabel for="uf" value="Uf"/>
                             </div>
                             <div class="ui-grid-col-5">
-                                <p:selectOneMenu id="uf" value="#{funcionarioBean.funcionario.uf}" 
+                                <p:selectOneMenu id="uf" value="#{listarFuncionarioBean.funcionario.uf}" 
                                                  panelStyle="width:0px" converter="converterUf"
                                                  effect="fade" var="u" style="width:35%" filter="true" 
                                                  filterMatchMode="startsWith">
                                     <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
-                                    <f:selectItems value="#{funcionarioBean.listaUfs}" var="ufs" 
+                                    <f:selectItems value="#{listarFuncionarioBean.listaUfs}" var="ufs" 
                                                    itemLabel="#{ufs.uf}" itemValue="#{ufs}" />
-                                    <p:ajax event="change" listener="#{funcionarioBean.buscarCidadesPorUf(event)}" 
+                                    <p:ajax event="change" listener="#{listarFuncionarioBean.buscarCidadesPorUf(event)}" 
                                             update=":cidade"/>
                                     <p:column style="width:100%">
                                         <h:outputText value="#{u.uf}"/>
@@ -152,12 +150,12 @@
                                 <p:outputLabel for="cidade" value="Cidade"/>
                             </div>
                             <div class="ui-grid-col-5">
-                                <p:selectOneMenu id="cidade" value="#{funcionarioBean.funcionario.cidade}" 
+                                <p:selectOneMenu id="cidade" value="#{listarFuncionarioBean.funcionario.cidade}" 
                                                  panelStyle="width:0px" converter="converterCidade"
                                                  effect="fade" var="cid" style="width:65%" filter="true" 
                                                  filterMatchMode="startsWith">
                                     <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{funcionarioBean.listaCidades}" var="cidade" 
+                                    <f:selectItems value="#{listarFuncionarioBean.listaCidades}" var="cidade" 
                                                    itemLabel="#{cidade.cidade}" itemValue="#{cidade}" />
                                     <p:column style="width:100px">
                                         <h:outputText value="#{cid.cidade}"/>
@@ -172,7 +170,7 @@
                                 <p:outputLabel for="nome" value="Nome *"/>
                             </div>
                             <div class="ui-grid-col-5">
-                                <p:inputText id="nome" value="#{funcionarioBean.funcionario.nome}" 
+                                <p:inputText id="nome" value="#{listarFuncionarioBean.funcionario.nome}" 
                                              style="width: 94%" onblur="value = value.toUpperCase()"/>
                             </div>
 
@@ -180,7 +178,7 @@
                                 <p:outputLabel for="email" value="Email *"/> 
                             </div>
                             <div class="ui-grid-col-5">
-                                <p:inputText id="email" value="#{funcionarioBean.funcionario.email}" 
+                                <p:inputText id="email" value="#{listarFuncionarioBean.funcionario.email}" 
                                              style="width:94%"/> 
                             </div>
                         </div>
@@ -191,7 +189,7 @@
                                 <p:outputLabel for="bairro" value="Bairro *"/>
                             </div>
                             <div class="ui-grid-col-5">
-                                <p:inputText id="bairro" value="#{funcionarioBean.funcionario.bairro}" 
+                                <p:inputText id="bairro" value="#{listarFuncionarioBean.funcionario.bairro}" 
                                              style="width:94%" onblur="value = value.toUpperCase()"/>
                             </div>
 
@@ -199,7 +197,7 @@
                                 <p:outputLabel for="rua" value="Rua *"/>
                             </div>
                             <div class="ui-grid-col-5">
-                                <p:inputText id="rua" value="#{funcionarioBean.funcionario.rua}" 
+                                <p:inputText id="rua" value="#{listarFuncionarioBean.funcionario.rua}" 
                                              style="width:94%" onblur="value = value.toUpperCase()"/>
                             </div>
                         </div>
@@ -212,7 +210,7 @@
 
                             <div class="ui-grid-col-5">
                                 <p:inputMask mask="(999) - 9999-9999" id="telefone" 
-                                             value="#{funcionarioBean.funcionario.telefone}" 
+                                             value="#{listarFuncionarioBean.funcionario.telefone}" 
                                              style="width: 47%"/>
                             </div>
 
@@ -221,7 +219,7 @@
                             </div>
                             <div class="ui-grid-col-5">
                                 <p:inputMask mask="(999) - 99999-9999" id="celular" 
-                                             value="#{funcionarioBean.funcionario.celular}" 
+                                             value="#{listarFuncionarioBean.funcionario.celular}" 
                                              style="width: 47%"/>
                             </div>
                         </div>
@@ -233,7 +231,7 @@
                             </div>
 
                             <div class="ui-grid-col-5">
-                                <p:inputMask mask="9?99999" id="numero" value="#{funcionarioBean.funcionario.numero}" 
+                                <p:inputMask mask="9?99999" id="numero" value="#{listarFuncionarioBean.funcionario.numero}" 
                                              style="width:47%"/>
                             </div>
 
@@ -242,7 +240,7 @@
                             </div>
 
                             <div class="ui-grid-col-5">
-                                <p:inputMask mask="99999-999" id="cep" value="#{funcionarioBean.funcionario.cep}" 
+                                <p:inputMask mask="99999-999" id="cep" value="#{listarFuncionarioBean.funcionario.cep}" 
                                              style="width:47%"/>
                             </div>
                         </div>
@@ -253,7 +251,7 @@
                             </div>
 
                             <div class="ui-grid-col-5">
-                                <p:inputMask mask="99999999" id="rg" value="#{funcionarioBean.funcionario.rg}" 
+                                <p:inputMask mask="99999999" id="rg" value="#{listarFuncionarioBean.funcionario.rg}" 
                                              style="width:47%"/>
                             </div>
 
@@ -262,7 +260,7 @@
                             </div>
 
                             <div class="ui-grid-col-5">
-                                <p:inputMask mask="999.999.999-99" id="cpf" value="#{funcionarioBean.funcionario.cpf}" 
+                                <p:inputMask mask="999.999.999-99" id="cpf" value="#{listarFuncionarioBean.funcionario.cpf}" 
                                              style="width:47%" validator="validaCpf"/>
                             </div>
                         </div>
@@ -273,12 +271,12 @@
                             </div>
 
                             <div class="ui-grid-col-5">
-                                <p:selectOneMenu id="cargo" value="#{funcionarioBean.funcionario.cargo}" 
+                                <p:selectOneMenu id="cargo" value="#{listarFuncionarioBean.funcionario.cargo}" 
                                                  panelStyle="width:0px" converter="converterCargo"
                                                  effect="fade" var="c" style="width:47%" filter="true" 
                                                  filterMatchMode="custom">
                                     <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
-                                    <f:selectItems value="#{funcionarioBean.listaCargos}" var="cargo" 
+                                    <f:selectItems value="#{listarFuncionarioBean.listaCargos}" var="cargo" 
                                                    itemLabel="#{cargo.cargo}" itemValue="#{cargo}" />
 
                                     <p:column style="width:10%">
@@ -292,7 +290,7 @@
                             </div>
 
                             <div class="ui-grid-col-2">
-                                <p:calendar id="nascimento" value="#{funcionarioBean.funcionario.dataNascimento}" 
+                                <p:calendar id="nascimento" value="#{listarFuncionarioBean.funcionario.dataNascimento}" 
                                             locale="br" navigator="true" pattern="dd/MM/yyyy" placeholder="Selecione a data"
                                             converter="dataConverter">                               
                                 </p:calendar>
@@ -309,17 +307,17 @@
                             <div class="ui-grid-col-3">
                                 <p:commandButton icon="ui-icon-disk" value="Salvar" update=":panelConteudo :table" 
                                                  rendered="#{jsfUtil.botaoSalvar}"
-                                                 actionListener="#{funcionarioBean.salvarAlterarFuncionario}"/>                    
+                                                 actionListener="#{salvarFuncionarioBean.salvarFuncionario}"/>                    
 
 
                                 <p:commandButton icon="ui-icon-disk" value="Alterar" update=":panelConteudo :table"
                                                  rendered="#{jsfUtil.botaoAlterar}"
-                                                 actionListener="#{funcionarioBean.salvarAlterarFuncionario}"/>                    
+                                                 actionListener="#{alterarFuncionarioBean.alterarFuncionario}"/>                    
 
                                 <p:spacer width="4px"/>
                                 <p:commandButton icon="ui-icon-cancel" value="Cancelar" 
                                                  update=":panelConteudo"
-                                                 actionListener="#{funcionarioBean.cancelar}" immediate="true" process="@this"/>                                              
+                                                 actionListener="#{listarFuncionarioBean.cancelar}" immediate="true" process="@this"/>                                              
                             </div>                
                         </div>
                     </div>
@@ -328,10 +326,10 @@
 
 
             <h:form id="formDialogExcluir" prependId="false">
-                <p:confirmDialog  message="Deseja excluir o funcionário #{funcionarioBean.funcionario.nome}?"
+                <p:confirmDialog  message="Deseja excluir o funcionário #{listarFuncionarioBean.funcionario.nome}?"
                                   header="Exclusão de Funcionários" severity="alert"
                                   widgetVar="dialogConfirmaExclusao">
-                    <p:commandButton value="Sim" action="#{funcionarioBean.excluirFuncionario}"
+                    <p:commandButton value="Sim" action="#{excluirFuncionarioBean.excluirFuncionario}"
                                      oncomplete="PF('dialogConfirmaExclusao').hide()" update=":panelConteudo"/>
                     <p:commandButton value="Não" 
                                      oncomplete="PF('dialogConfirmaExclusao').hide()" update=":panelConteudo" >                       
