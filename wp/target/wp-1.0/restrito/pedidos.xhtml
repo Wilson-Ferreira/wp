@@ -11,14 +11,14 @@
         <f:view>  
 
             <f:metadata>
-                <f:viewAction action="#{pedidoBean.iniciarConversation()}"/>
-                <f:viewAction action="#{pedidoBean.inicializar(event)}"/>
-                <f:viewAction action="#{pedidoBean.buscarTipoDeCobranca()}"/>
-                <f:param name="secao" value="#{pedidoBean.secao}"/>
+                <f:viewAction action="#{listarPedidoBean.iniciarConversation()}"/>
+                <f:viewAction action="#{listarPedidoBean.inicializar(event)}"/>
+                <f:viewAction action="#{listarPedidoBean.buscarTipoDeCobranca()}"/>
+                <f:param name="secao" value="#{listarPedidoBean.secao}"/>
             </f:metadata>
 
             <h:form>
-                <p:poll interval="30" listener="#{pedidoBean.buscarTodosPedidos()}" 
+                <p:poll interval="30" listener="#{listarPedidoBean.buscarPedidosPorSecao()}" 
                         update=":panelConteudo :formTablePedidos :table"/>
             </h:form>               
 
@@ -26,7 +26,7 @@
 
                 <div class="aw-page-title">             
                     <p:outputPanel  id="info">
-                        <p:outputLabel value="Edição de pedidos #{pedidoBean.secao}"
+                        <p:outputLabel value="Edição de pedidos #{listarPedidoBean.secao}"
                                        rendered="#{jsfUtil.pageTitle}"/>
                     </p:outputPanel>
                 </div>
@@ -39,38 +39,38 @@
 
                             <p:commandButton value="Novo" icon="ui-icon-disk" process="@this" immediate="true"
                                              rendered="#{request.isUserInRole('ROLE_ADICIONAR_PEDIDOS')}"
-                                             action="#{pedidoBean.iniciarNovoPedido()}" />
+                                             action="#{listarPedidoBean.iniciarNovoPedido()}" />
                           
                             <p:commandButton value="Alterar" icon="ui-icon-pencil" process="@this" immediate="true"
                                              rendered="#{request.isUserInRole('ROLE_ALTERAR_PEDIDOS')}"
-                                             disabled="#{pedidoBean.listaPedidosSelecionados == null}"
-                                             actionListener="#{pedidoBean.preparaAlterarPedido()}"
+                                             disabled="#{listarPedidoBean.listaPedidosSelecionados == null}"
+                                             actionListener="#{alterarPedidoBean.preparaAlterarPedido()}"
                                              update=":panelConteudo" resetValues="true"/>
                          
                             <p:commandButton value="Excluir" icon="ui-icon-trash" process="@this" immediate="true"
                                              rendered="#{request.isUserInRole('ROLE_EXCLUIR_PEDIDOS')}"
-                                             disabled="#{pedidoBean.listaPedidosSelecionados == null}"
-                                             actionListener="#{pedidoBean.preparaExcluirPedido}" 
+                                             disabled="#{listarPedidoBean.listaPedidosSelecionados == null}"
+                                             actionListener="#{excluirPedidoBean.preparaExcluirPedido}" 
                                              update=":formDialogExcluir" resetValues="true"/>
                            
                             <p:commandButton icon="ui-icon-pencil" value="Alterar Status" process="@this" 
                                              rendered="#{request.isUserInRole('ROLE_ALTERAR_STATUS_PEDIDOS')}"
-                                             disabled="#{pedidoBean.listaPedidosSelecionados == null}"
-                                             actionListener="#{pedidoBean.alterarStatusPedido}"                                             
+                                             disabled="#{listarPedidoBean.listaPedidosSelecionados == null}"
+                                             actionListener="#{alterarStatusPedidoBean.alterarStatusPedido}"                                             
                                              resetValues="true" update=":panelConteudo">
                             </p:commandButton> 
                            
                             <p:commandButton value="Calcular Conta"
                                              rendered="#{request.isUserInRole('ROLE_CALCULAR_CONTAS')}"
-                                             disabled="#{pedidoBean.listaPedidosSelecionados == null}"
-                                             action="#{pedidoBean.preparaCalcularConta}"
+                                             disabled="#{listarPedidoBean.listaPedidosSelecionados == null}"
+                                             action="#{listarPedidoBean.preparaCalcularConta}"
                                              update=":panelConteudo" resetValues="true">                                  
                             </p:commandButton> 
                             
                             <p:commandButton value="Transferir pedidos" icon="ui-icon-pencil" process="@this" immediate="true"
                                              rendered="#{request.isUserInRole('ROLE_TRANSFERIR_PEDIDOS') and jsfUtil.campoCartao}"  
-                                             disabled="#{pedidoBean.listaPedidosSelecionados == null}" 
-                                             actionListener="#{pedidoBean.preparaTransferirPedidos()}"
+                                             disabled="#{listarPedidoBean.listaPedidosSelecionados == null}" 
+                                             actionListener="#{transferirPedidoBean.preparaTransferirPedidos()}"
                                              update=":panelConteudo" resetValues="true"/>                                            
                            
                         </p:toolbarGroup>
@@ -99,12 +99,12 @@
                                 <p:outputLabel for="func" value="Funcionario "  />
                             </div>
                             <div class="ui-grid-col-3">
-                                <p:selectOneMenu id="func" value="#{pedidoBean.pedido.funcionario}" 
+                                <p:selectOneMenu id="func" value="#{listarPedidoBean.pedido.funcionario}" 
                                                  panelStyle="width:0px" converter="converterFuncionario"
                                                  effect="fade" var="f" style="width:300px" filter="true" 
                                                  filterMatchMode="startsWith">
                                     <f:selectItem itemLabel="Selecione" itemValue=""/>
-                                    <f:selectItems value="#{pedidoBean.listaFuncionarios}" var="funcionario" 
+                                    <f:selectItems value="#{listarPedidoBean.listaFuncionarios}" var="funcionario" 
                                                    itemLabel="#{funcionario.nome}" itemValue="#{funcionario}" />
                                     <p:column style="width:10%">
                                         <h:outputText value="#{f.nome}"/>
@@ -119,14 +119,14 @@
                                 <p:outputLabel for="categ" value="Categoria "  />
                             </div>
                             <div class="ui-grid-col-3">
-                                <p:selectOneMenu id="categ" value="#{pedidoBean.pedido.itemCardapio.categoria}" 
+                                <p:selectOneMenu id="categ" value="#{listarPedidoBean.pedido.itemCardapio.categoria}" 
                                                  panelStyle="width:0px" converter="converterCategoria"
                                                  effect="fade" var="c" style="width:150px" filter="true" 
                                                  filterMatchMode="startsWith">
                                     <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
-                                    <f:selectItems value="#{pedidoBean.listaCategorias}" var="categ" 
+                                    <f:selectItems value="#{listarPedidoBean.listaCategorias}" var="categ" 
                                                    itemLabel="#{categ.categoria}" itemValue="#{categ}" />
-                                    <p:ajax event="change" listener="#{pedidoBean.buscarItemCardapioPorCategoria(event)}" 
+                                    <p:ajax event="change" listener="#{listarPedidoBean.buscarItemCardapioPorCategoria(event)}" 
                                             update=":itemCardapio :qtde_itens_pedido"/>
                                     <p:column style="width:10%">
                                         <h:outputText value="#{c.categoria}"/>
@@ -141,12 +141,12 @@
                                 <p:outputLabel for="itemCardapio" value="Item"  />
                             </div>
                             <div class="ui-grid-col-3">
-                                <p:selectOneMenu id="itemCardapio" value="#{pedidoBean.pedido.itemCardapio}"
+                                <p:selectOneMenu id="itemCardapio" value="#{listarPedidoBean.pedido.itemCardapio}"
                                                  panelStyle="width:0px" converter="converterItemCardapio"
                                                  effect="fade" var="item" style="width:300px" filter="true" 
                                                  filterMatchMode="startsWith">
                                     <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
-                                    <f:selectItems value="#{pedidoBean.listaItensCardapio}" var="itemCardapio" 
+                                    <f:selectItems value="#{listarPedidoBean.listaItensCardapio}" var="itemCardapio" 
                                                    itemLabel="#{itemCardapio.nome}" itemValue="#{itemCardapio}"/>
                                     <p:column style="width:10%">
                                         <h:outputText value="#{item.nome}"/>
@@ -161,12 +161,12 @@
                                 <p:outputLabel for="qtde_itens_pedido" value="Quantidade"  />
                             </div>
                             <div class="ui-grid-col-3">
-                                <p:selectOneMenu id="qtde_itens_pedido" value="#{pedidoBean.pedido.quantidade}"
+                                <p:selectOneMenu id="qtde_itens_pedido" value="#{listarPedidoBean.pedido.quantidade}"
                                                  panelStyle="width:150px" converter="converterQuantidade"
                                                  effect="fade" var="q" style="width:130px" filter="true" 
                                                  filterMatchMode="startsWith">
                                     <f:selectItem itemLabel="Selecione" itemValue=""/>
-                                    <f:selectItems value="#{pedidoBean.listaQuantidade}" var="qtde" 
+                                    <f:selectItems value="#{listarPedidoBean.listaQuantidade}" var="qtde" 
                                                    itemLabel="#{qtde.quantString}" itemValue="#{qtde}"/>
 
                                     <p:column style="width:10%">
@@ -182,12 +182,12 @@
                                 <p:outputLabel for="mesa" value="Mesa"  />
                             </div>
                             <div class="ui-grid-col-3">
-                                <p:selectOneMenu id="mesa" value="#{pedidoBean.pedido.mesa}"  
+                                <p:selectOneMenu id="mesa" value="#{listarPedidoBean.pedido.mesa}"  
                                                  panelStyle="width:150px" converter="converterMesa"
                                                  effect="fade" var="m" style="width:130px" filter="true" 
                                                  filterMatchMode="startsWith">
                                     <f:selectItem itemLabel="Selecione" itemValue=""/>
-                                    <f:selectItems value="#{pedidoBean.listaMesas}" var="mesa" 
+                                    <f:selectItems value="#{listarPedidoBean.listaMesas}" var="mesa" 
                                                    itemLabel="#{mesa.numeroMesa}" itemValue="#{mesa}"/>
                                     <p:column style="width:10%">
                                         <h:outputText value="#{m.numeroMesa}"/>
@@ -203,12 +203,12 @@
                                                rendered="#{jsfUtil.campoCartao}"/>
                             </div>
                             <div class="ui-grid-col-3">
-                                <p:selectOneMenu id="cartaoNumero" value="#{pedidoBean.pedido.cartao}"
+                                <p:selectOneMenu id="cartaoNumero" value="#{listarPedidoBean.pedido.cartao}"
                                                  panelStyle="width:150px" converter="converterCartao"
                                                  effect="fade" var="c" style="width:130px" filter="true" 
                                                  filterMatchMode="startsWith" rendered="#{jsfUtil.campoCartao}">
                                     <f:selectItem itemLabel="Selecione" itemValue=""/>
-                                    <f:selectItems value="#{pedidoBean.listaCartoesRetidos}" var="cartao" 
+                                    <f:selectItems value="#{listarPedidoBean.listaCartoesRetidos}" var="cartao" 
                                                    itemLabel="#{cartao.numeroCartao}" itemValue="#{cartao}"/>
 
                                     <p:column style="width:10%">
@@ -226,13 +226,13 @@
                                                rendered="#{jsfUtil.botaoTranferirPedidos and jsfUtil.campoCartao}"/>
                             </div>
                             <div class="ui-grid-col-3">
-                                <p:selectOneMenu id="cartaoParaTranferir" value="#{pedidoBean.cartao}"
+                                <p:selectOneMenu id="cartaoParaTranferir" value="#{listarPedidoBean.cartao}"
                                                  panelStyle="width:150px" converter="converterCartao"
                                                  effect="fade" var="c" style="width:130px" filter="true" 
                                                  filterMatchMode="startsWith"  
                                                  rendered="#{jsfUtil.botaoTranferirPedidos and jsfUtil.campoCartao}">
                                     <f:selectItem itemLabel="Selecione" itemValue=""/>
-                                    <f:selectItems value="#{pedidoBean.listaCartoesRetidos}" var="cartaoTranferir" 
+                                    <f:selectItems value="#{listarPedidoBean.listaCartoesRetidos}" var="cartaoTranferir" 
                                                    itemLabel="#{cartaoTranferir.numeroCartao}" itemValue="#{cartaoTranferir}"/>
 
                                     <p:column style="width:10%">
@@ -247,19 +247,19 @@
                             <div class="ui-grid-col-5"></div>
                             <div class="ui-grid-col-2">
                                 <p:commandButton icon="ui-icon-pencil" value="Alterar"
-                                                 actionListener="#{pedidoBean.alterarPedido()}" 
+                                                 actionListener="#{alterarPedidoBean.alterarPedido()}" 
                                                  update=":panelConteudo"                                            
                                                  rendered="#{jsfUtil.botaoAlterar}"/>
                                 <p:spacer width="3px"/>
                                
                                  <p:commandButton icon="ui-icon-disk" value="Tranferir"
-                                                 actionListener="#{pedidoBean.tranferirPedidos()}" 
+                                                 actionListener="#{transferirPedidoBean.tranferirPedidos()}" 
                                                  update=":panelConteudo"                                            
                                                  rendered="#{jsfUtil.botaoTranferirPedidos and jsfUtil.campoCartao}"/>
                                   <p:spacer width="3px"/>
                                   
                                   <p:commandButton icon="ui-icon-cancel" process="@this" value="Cancelar" immediate="true" 
-                                                 actionListener="#{pedidoBean.cancelar()}" update=":panelConteudo :formTablePedidos :table"/>
+                                                 actionListener="#{listarPedidoBean.cancelar()}" update=":panelConteudo :formTablePedidos :table"/>
                             
                             </div>
                         </div>
@@ -268,15 +268,15 @@
 
                 <h:form id="formTablePedidos"  prependId="false" rendered="#{jsfUtil.dataTable}">
 
-                    <p:dataTable var="pedido" value="#{pedidoBean.listaPedidos}" 
+                    <p:dataTable var="pedido" value="#{listarPedidoBean.listaPedidos}" 
                                  paginator="true" rows="17" paginatorPosition="bottom"
-                                 emptyMessage="Não há pedidos cadastrados" selection="#{pedidoBean.listaPedidosSelecionados}"
+                                 emptyMessage="Não há pedidos cadastrados" selection="#{listarPedidoBean.listaPedidosSelecionados}"
                                  selectionMode="multiple" rowKey="#{pedido}" reflow="true" 
                                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                                  rowsPerPageTemplate="17,30,40" id="table" class="ui-datatable">
 
-                        <p:ajax event="rowSelect" listener="#{pedidoBean.onRowSelect(event)}" update=":panelConteudo :table"/>
-                        <p:ajax event="rowUnselect" listener="#{pedidoBean.onRowUnselect(event)}" update=":panelConteudo :table"/>
+                        <p:ajax event="rowSelect" listener="#{listarPedidoBean.onRowSelect(event)}" update=":panelConteudo :table"/>
+                        <p:ajax event="rowUnselect" listener="#{listarPedidoBean.onRowUnselect(event)}" update=":panelConteudo :table"/>
 
                         <p:column headerText="Funcionário">               
                             <h:outputText value="#{pedido.funcionario.nome}" /> 
@@ -337,9 +337,9 @@
                     <p:confirmDialog  message="Deseja excluir?" style="font-size: 14px"
                                       header="Exclusão de Pedido" severity="alert"
                                       widgetVar="dialogConfirmaExclusao">
-                        <p:commandButton value="Sim" action="#{pedidoBean.excluirPedido}"
+                        <p:commandButton value="Sim" action="#{excluirPedidoBean.excluirPedido}"
                                          oncomplete="PF('dialogConfirmaExclusao').hide()" update=":panelConteudo :formTablePedidos :table"/>
-                        <p:commandButton value="Não" action="#{pedidoBean.cancelar()}"
+                        <p:commandButton value="Não" action="#{listarPedidoBean.cancelar()}"
                                          oncomplete="PF('dialogConfirmaExclusao').hide()" update=":panelConteudo :formTablePedidos :table"/>                                     
                     </p:confirmDialog>
 

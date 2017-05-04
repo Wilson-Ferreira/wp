@@ -30,20 +30,20 @@
                     
                     <p:menuitem value="Bar" outcome="/restrito/pedidos.xhtml"
                                 rendered="#{request.isUserInRole('ROLE_BAR')}"
-                                actionListener="#{pedidoBean.inicializar(event)}" >
+                                actionListener="#{listarPedidoBean.inicializar(event)}" >
                         <f:param name="secao" value="bar" />               
                     </p:menuitem>
                     
                    
                     <p:menuitem value="Caixa" outcome="/restrito/pedidos.xhtml"
                                 rendered="#{request.isUserInRole('ROLE_CAIXA')}"
-                                actionListener="#{pedidoBean.inicializar(event)}" > 
+                                actionListener="#{listarPedidoBean.inicializar(event)}" > 
                          <f:param name="secao" value="caixa" />  
                     </p:menuitem>
 
                      <p:menuitem value="Cosinha" outcome="/restrito/pedidos.xhtml"
                                 rendered="#{request.isUserInRole('ROLE_COSINHA')}"
-                                actionListener="#{pedidoBean.inicializar(event)}" >
+                                actionListener="#{listarPedidoBean.inicializar(event)}" >
                         <f:param name="secao" value="cosinha" />               
                     </p:menuitem>
 

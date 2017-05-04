@@ -5,6 +5,7 @@
  */
 package br.com.wp.controle;
 
+import br.com.wp.controle.pedido.ListarPedidoBean;
 import br.com.wp.enumeracao.StatusCartao;
 import br.com.wp.enumeracao.TipoCobranca;
 import br.com.wp.exception.DataBaseException;
@@ -56,7 +57,7 @@ public class CalculaContaBean implements Serializable {
     @Inject
     private Pedido pedido;
     @Inject
-    private PedidoBean pedidoBean;
+    private ListarPedidoBean pedidoBean;
     @Inject
     private JsfUtil jsfUtil;
     
