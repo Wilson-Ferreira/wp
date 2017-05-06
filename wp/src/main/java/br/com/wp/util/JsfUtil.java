@@ -13,11 +13,12 @@ import javax.inject.Named;
 import org.primefaces.context.RequestContext;
 
 /**
- * Classe responsável pelo controle da renderização dos botões salvar e alterar
- * e outros componentes dos formulários nas páginas do sistema.
+ * Classe responsável pelo controle da renderização dos componentes
+ * dos formulários nas páginas do sistema.
  *
  * @author Wilson Ferreira Florindo
  */
+
 @Named
 @ViewScoped
 public class JsfUtil implements Serializable {
